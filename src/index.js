@@ -21,9 +21,19 @@ class Feed extends React.Component {
         };
     }
 
+    componentDidMount() {
+        getMainFeed()
+            .then(repos => this.setState({
+                repos: repos
+            }))
+    }
+
     render() {
+        const { repos } = this.state;
         return (
-            <p>hey there delilah</p>
+            <React.Fragment>
+            {repos && <pre>{JSON.stringify(repos, null, 2)}</pre>}
+            </React.Fragment>
         );
     }
 }
