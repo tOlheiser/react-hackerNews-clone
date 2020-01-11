@@ -7,14 +7,14 @@ import { getMainFeed, getItemDate } from './api.js';
 class Nav extends React.Component {
 
     render() {
-        const { feed } = this.props; 
+        const { feed, setFeed } = this.props; 
 
         return (
             <div className="container">
                 <ul className="flex between row container-sm clear">
                     <div className="flex">
-                        <li className={`nav-font ${feed === 'top' && 'active'}`} onClick={() => this.props.displayFeed('top')}>Top</li>
-                        <li className={`nav-font ${feed === 'new' && 'active'}`} onClick={() => this.props.displayFeed('new')}>New</li>
+                        <li className={`nav-font ${feed === 'top' && 'active'}`} onClick={() => setFeed('top')}>Top</li>
+                        <li className={`nav-font ${feed === 'new' && 'active'}`} onClick={() => setFeed('new')}>New</li>
                     </div>
                     <div className="flex">
                         <li className="nav-font" >Styles</li>
@@ -35,16 +35,17 @@ class Feed extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.feed);
         getMainFeed(this.props.feed)
+        // returns the feed of items in JSON format.
             .then(items => this.setState({
+                //grab the items and store them in the 'items' state.
                 items: items
             }))
     }
 
     componentDidUpdate(prevProps) {
+        // compare the current state of feed to the previous
         if (this.props.feed !== prevProps.feed) {
-            console.log(this.props.feed);
             getMainFeed(this.props.feed)
                 .then(items => this.setState({
                     items: items
@@ -82,10 +83,10 @@ class App extends React.Component {
             feed: 'top',
         };
 
-        this.displayFeed = this.displayFeed.bind(this);
+        this.setFeed = this.setFeed.bind(this);
     }
 
-    displayFeed(feed) {
+    setFeed(feed) {
         this.setState({
             feed: feed
         })
@@ -95,7 +96,7 @@ class App extends React.Component {
         return (
             <React.Fragment>
                 <Nav 
-                    displayFeed={this.displayFeed}
+                    setFeed={this.setFeed}
                     feed={this.state.feed}
                 />
                 <Feed 
@@ -107,11 +108,3 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
-
-// Write some functions in the api sheet.
-// Read up on how to pull said functions with modules.
-// Figure out how I should display the api data. 
-// Pretty sure I don't need to track state in the Feed. 
-
-//{repos && <pre>{JSON.stringify(repos, null, 2)}</pre>}
-// he updated state to include the repos
