@@ -1,0 +1,41 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.container-sm {
+  width: 80%;
+}
+
+.flex {
+  display: flex;
+}
+
+.row {
+  flex-direction: row;
+
+}
+
+.col {
+  flex-direction: column;
+}
+
+.between {
+  justify-content: space-between;
+}
+
+.nav-font {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.nav-font:first-child {
+  margin-right: .5em;
+}
+
+.clear {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}

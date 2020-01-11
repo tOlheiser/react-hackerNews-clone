@@ -6,9 +6,17 @@ import { getMainFeed } from './api.js';
 
 function Nav(props) {
     return (
-        <div>
-            <h1>Nav Bar</h1><br></br>
-        </div>
+            <div className="container">
+                <ul className="flex between row container-sm clear">
+                    <div className="flex">
+                        <li className="nav-font">Top</li>
+                        <li className="nav-font">New</li>
+                    </div>
+                    <div className="flex">
+                        <li className="nav-font">Styles</li>
+                    </div>
+                </ul><br></br>
+            </div>
     );
 }
 
@@ -32,7 +40,12 @@ class Feed extends React.Component {
         const { repos } = this.state;
         return (
             <React.Fragment>
-            {repos && <pre>{JSON.stringify(repos, null, 2)}</pre>}
+            <div className="container">
+                <div className="flex col container-sm">
+                    {repos && <pre>{JSON.stringify(repos, null, 2)}</pre>}
+                </div>
+            </div>
+            
             </React.Fragment>
         );
     }
