@@ -62,7 +62,7 @@ class Feed extends React.Component {
                         { items != null && items.map((item) => {
                             return (
                                 <li className="item" key={item.id}> 
-                                    <p><a className="title" href="#">{item.title}</a></p>
+                                    <p><a className="title" href={item.url}>{item.title}</a></p>
                                     <p className="info">by <a className="infoLink" href="#">{item.by}</a> on {getItemDate(item.time)} with <a className="infoLink" href="#">{item.kids != null ? item.kids.length : '0'}</a> comments</p>
                                 </li>)
                             })
