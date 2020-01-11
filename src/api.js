@@ -1,6 +1,6 @@
-export function getMainFeed() {
+export function getMainFeed(feed) {
     // feed should hold the value 'top' or 'new'
-    return fetch('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
+    return fetch(`https://hacker-news.firebaseio.com/v0/${feed}stories.json?print=pretty`)
       .then(response => response.json())
       .then(ids => ids.slice(0, 50))
       .then(ids => Promise.all(ids.map(id => 
