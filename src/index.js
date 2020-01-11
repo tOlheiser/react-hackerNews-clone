@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './reset.css';
 import './index.css';
-import { getMainFeed } from './api.js';
+import { getMainFeed, getItemDate } from './api.js';
 
 function Nav(props) {
     return (
@@ -47,8 +47,8 @@ class Feed extends React.Component {
                             return (
                                 <li className="item"> 
                                     <p><a className="title" href="#">{item.title}</a></p>
-                                    <p className="info">by <a className="infoLink" href="#">{item.by}</a> on {item.time} with <a className="infoLink" href="#">{item.kids != null && item.kids.length}</a> comments</p>
-                                    {console.log(item.kids)}
+                                    <p className="info">by <a className="infoLink" href="#">{item.by}</a> on {getItemDate(item.time)} with <a className="infoLink" href="#">{item.kids != null && item.kids.length}</a> comments</p>
+                                    {console.log(getItemDate(item.time))}
                                 </li>)
                             })
                         }

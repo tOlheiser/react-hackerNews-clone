@@ -8,3 +8,25 @@ export function getMainFeed() {
         .then(response => response.json())
         )))
 }
+
+export function getItemDate(time) {
+  let dateObj = new Date(time * 1000);
+
+  let year = dateObj.getFullYear();
+  let month = dateObj.getMonth() + 1;
+  let day = dateObj.getDate();
+  let hours = dateObj.getHours() + 1;
+  let minutes = dateObj.getMinutes();
+  let dayAbbrv = 'AM';
+
+  if (hours > 12) {
+    hours = hours - 12;
+    dayAbbrv = 'PM';
+  }
+
+  if (minutes < 10) {
+    minutes = '0' + minutes;
+  }
+
+  return `${month}/${day}/${year}, ${hours}:${minutes} ${dayAbbrv}`;
+}
