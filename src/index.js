@@ -4,20 +4,25 @@ import './reset.css';
 import './index.css';
 import { getMainFeed, getItemDate } from './api.js';
 
-function Nav(props) {
-    return (
+class Nav extends React.Component {
+
+    render() {
+        const { feed } = this.props; 
+
+        return (
             <div className="container">
                 <ul className="flex between row container-sm clear">
                     <div className="flex">
-                        <li className="nav-font">Top</li>
-                        <li className="nav-font">New</li>
+                        <li className={`nav-font ${feed === 'top' && 'active'}`} onClick={() => this.props.displayFeed('top')}>Top</li>
+                        <li className={`nav-font ${feed === 'new' && 'active'}`} onClick={() => this.props.displayFeed('new')}>New</li>
                     </div>
                     <div className="flex">
-                        <li className="nav-font">Styles</li>
+                        <li className="nav-font" >Styles</li>
                     </div>
                 </ul><br></br>
             </div>
-    );
+        );
+    }
 }
 
 class Feed extends React.Component {
@@ -25,20 +30,30 @@ class Feed extends React.Component {
         super(props);
         
         this.state = {
-            items: null,
+            items: null
         };
     }
 
     componentDidMount() {
-        getMainFeed()
+        console.log(this.props.feed);
+        getMainFeed(this.props.feed)
             .then(items => this.setState({
-                items: items,
+                items: items
             }))
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.feed !== prevProps.feed) {
+            console.log(this.props.feed);
+            getMainFeed(this.props.feed)
+                .then(items => this.setState({
+                    items: items
+                }))
+        }
     }
 
     render() {
         const { items } = this.state;
-        console.log(items);
         return (
             <div className="container">
                 <div className="flex col container-sm">
@@ -47,8 +62,7 @@ class Feed extends React.Component {
                             return (
                                 <li className="item"> 
                                     <p><a className="title" href="#">{item.title}</a></p>
-                                    <p className="info">by <a className="infoLink" href="#">{item.by}</a> on {getItemDate(item.time)} with <a className="infoLink" href="#">{item.kids != null && item.kids.length}</a> comments</p>
-                                    {console.log(getItemDate(item.time))}
+                                    <p className="info">by <a className="infoLink" href="#">{item.by}</a> on {getItemDate(item.time)} with <a className="infoLink" href="#">{item.kids != null ? item.kids.length : '0'}</a> comments</p>
                                 </li>)
                             })
                         }
@@ -61,11 +75,32 @@ class Feed extends React.Component {
 }
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            feed: 'top',
+        };
+
+        this.displayFeed = this.displayFeed.bind(this);
+    }
+
+    displayFeed(feed) {
+        this.setState({
+            feed: feed
+        })
+    }
+
     render() {
         return (
             <React.Fragment>
-                <Nav />
-                <Feed />
+                <Nav 
+                    displayFeed={this.displayFeed}
+                    feed={this.state.feed}
+                />
+                <Feed 
+                    feed={this.state.feed}
+                />
             </React.Fragment>
         )
     }
