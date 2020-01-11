@@ -29,6 +29,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
   font-size: 18px;
+  color: #000;
 }
 
 .nav-font:hover {
@@ -36,6 +37,21 @@
 }
 
 .nav-font:first-child {
+  margin-right: .5em;
+}
+
+.active {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  color: #BB2E1F;
+}
+
+.active:hover {
+  cursor: pointer;
+}
+
+#top {
   margin-right: .5em;
 }
 
@@ -54,6 +70,7 @@
 }
 
 .title {
+  display: block;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
   font-size: 16px;
