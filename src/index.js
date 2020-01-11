@@ -25,28 +25,42 @@ class Feed extends React.Component {
         super(props);
         
         this.state = {
-            repos: null
+            repos: null,
+            mounted: false
         };
     }
 
     componentDidMount() {
         getMainFeed()
             .then(repos => this.setState({
-                repos: repos
+                repos: repos,
+                mounted: true
             }))
     }
 
     render() {
-        const { repos } = this.state;
+        const { repos, mounted } = this.state;
+        console.log(repos);
         return (
-            <React.Fragment>
             <div className="container">
                 <div className="flex col container-sm">
-                    {repos && <pre>{JSON.stringify(repos, null, 2)}</pre>}
+                    <ul>
+                        { mounted == true && repos.map((repo) => {
+                            return (
+                                <li className="item"> 
+                                    <p className="title">{repo.title}</p>
+                                    <p className="info">by {repo.by} on {repo.time} with kids comments</p>
+                                    {console.log(repo.kids)}
+                                </li>)
+                            })
+
+                            //repos && <pre>{JSON.stringify(repos, null, 2)}</pre>
+                            // consider an if statement to rule out 'null'
+                        }
+                    </ul>
+                    
                 </div>
             </div>
-            
-            </React.Fragment>
         );
     }
 }
