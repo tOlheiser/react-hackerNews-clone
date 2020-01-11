@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import './reset.css';
 import './index.css';
 import { getMainFeed, getItemDate } from './api.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLightbulb as lightStyles } from '@fortawesome/free-solid-svg-icons';
+import { faLightbulb as darkStyles } from '@fortawesome/free-regular-svg-icons';
 
 class Nav extends React.Component {
 
     render() {
-        const { feed, setFeed } = this.props; 
+        const { feed, setFeed, toggleStyles, style } = this.props; 
 
         return (
             <div className="container">
@@ -17,7 +20,7 @@ class Nav extends React.Component {
                         <li className={`nav-font ${feed === 'new' && 'active'}`} onClick={() => setFeed('new')}>New</li>
                     </div>
                     <div className="flex">
-                        <li className="nav-font" >Styles</li>
+                        <li className="nav-font" ><FontAwesomeIcon onClick={toggleStyles} className="lightbulb" icon={style === 'light' ? lightStyles : darkStyles} /></li>
                     </div>
                 </ul><br></br>
             </div>
@@ -81,9 +84,11 @@ class App extends React.Component {
         
         this.state = {
             feed: 'top',
+            style: 'light'
         };
 
         this.setFeed = this.setFeed.bind(this);
+        this.toggleStyles = this.toggleStyles.bind(this);
     }
 
     setFeed(feed) {
@@ -92,12 +97,22 @@ class App extends React.Component {
         })
     }
 
+
+    toggleStyles() {
+        // Setting state based on previous state
+        this.setState((state) => ({
+            style: state.style == 'light' ? 'dark' : 'light'
+        }));
+    }
+
     render() {
         return (
             <React.Fragment>
                 <Nav 
                     setFeed={this.setFeed}
+                    toggleStyles={this.toggleStyles}
                     feed={this.state.feed}
+                    style={this.state.style}
                 />
                 <Feed 
                     feed={this.state.feed}
