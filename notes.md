@@ -108,3 +108,55 @@ Click event: When the user clicks on the username attached to a story in the mai
 1. Sets the state of the 'user' in the App component.
 2. The username is passed as props into the User component
 3. The username is passed as props from the User component into the UserProfile and UserFeed components.
+
+## Mounting the Component when data isn't available
+I found myself in this odd situation where I need to use this pattern "profile !== null && data" for everything. 
+
+```javascript
+<div className="flex container-sm col">
+    <h1 className="userHeading" style={style === 'light' ? userHeadingLight : userHeadingDark}>
+        {profile != null && profile.id}
+    </h1>
+    <p className="userInfo">joined 
+        <span className="userData"> {profile != null && getItemDate(profile.created)} </span>
+        has <span className="userData">{profile != null && profile.karma} </span>karma
+    </p>
+</div>
+```
+
+I ran into a problem where the words "joined has karma" would load before all the data. I'd prefer instead to have everything appear at once. So then I tried nesting everything inside "profile != null" but it failed to compile.
+
+```javascript
+{profile != null && 
+    <div className="container">
+        <div className="flex container-sm col">
+            <h1 className="userHeading" style={style === 'light' ? userHeadingLight : userHeadingDark}>
+                {profile.id}
+            </h1>
+            <p className="userInfo">joined 
+                <span className="userData"> {getItemDate(profile.created)} </span>
+                has <span className="userData">{profile.karma} </span>karma
+            </p>
+        </div>
+    </div>
+}
+```
+
+Solution: wrap everything inside of a React.Fragment. 
+```javascript
+<React.Fragment>
+    {profile != null && 
+    <div className="container">
+        <div className="flex container-sm col">
+            <h1 className="userHeading" style={style === 'light' ? userHeadingLight : userHeadingDark}>
+                {profile.id}
+            </h1>
+            <p className="userInfo">joined 
+                <span className="userData"> {getItemDate(profile.created)} </span>
+                has <span className="userData">{profile.karma} </span>karma
+            </p>
+        </div>
+    </div>
+    }
+</React.Fragment>
+```
