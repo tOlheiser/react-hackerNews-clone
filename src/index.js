@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './reset.css';
 import './index.css';
-import { getMainFeed, getItemDate } from './api.js';
+import { getMainFeed, getUserProfile, getItemDate } from './api.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb as lightStyles } from '@fortawesome/free-solid-svg-icons';
 import { faLightbulb as darkStyles } from '@fortawesome/free-regular-svg-icons';
@@ -115,11 +115,44 @@ class Feed extends React.Component {
 }
 
 class UserProfile extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            profile: null
+        };
+    }
+
+    componentDidMount() {
+        getUserProfile(this.props.username)
+            .then((profile) => this.setState({
+                profile: profile
+            }))
+    }
 
     render() {
+        const { profile } = this.state;
+        const { style } = this.props;
+
+        const userHeadingLight = {
+            color: "#000"
+        }
+
+        const userHeadingDark = {
+            color: "#DADADA"
+        }
+
         return (
-            <div>
-                
+            <div className="container">
+                <div className="flex container-sm col">
+                    <h1 className="userHeading" style={style === 'light' ? userHeadingLight : userHeadingDark}>
+                        {profile != null && profile.id}
+                    </h1>
+                    <p className="userInfo">joined 
+                        <span className="userData"> {profile != null && getItemDate(profile.created)} </span>
+                        has <span className="userData">{profile != null && profile.karma} </span>karma
+                    </p>
+                </div>
             </div>
         )
     }
@@ -129,8 +162,10 @@ class UserFeed extends React.Component {
 
     render() {
         return (
-            <div>
-                
+            <div className="container">
+                <div className="flex container-sm col">
+                    <h2>Posts</h2>
+                </div>
             </div>
         )
     }
@@ -140,12 +175,12 @@ class User extends React.Component {
 
 
     render() {
-        const { username } = this.props;
+        const { username, style } = this.props;
 
         return (
             <div>
-                <UserProfile username={username} />
-                <UserFeed username={username} />           
+                <UserProfile username={username} style={style} />
+                <UserFeed username={username} style={style} />           
             </div>
         )
     }
@@ -201,6 +236,7 @@ class App extends React.Component {
                 /> */ }
                 <User 
                     username="danabramov"
+                    style={this.state.style}
                 />
 
             </body>
