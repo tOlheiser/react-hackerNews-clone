@@ -143,35 +143,31 @@ class UserProfile extends React.Component {
         }
 
         return (
-            <React.Fragment>
-
-                <React.Fragment>
+            <React.Fragment>    
                 {profile != null && 
-                <div className="container">
-                    <div className="flex container-sm col">
-                        <h1 className="userHeading" style={style === 'light' ? userHeadingLight : userHeadingDark}>
-                            {profile.id}
-                        </h1>
-                        <p className="userInfo">joined 
-                            <span className="userData"> {getItemDate(profile.created)} </span>
-                            has <span className="userData">{profile.karma} </span>karma
-                        </p>
-                        
-                    </div>
-                </div>
-                }
-                </React.Fragment>
-
                 <React.Fragment>
-                {profile != null &&
-                    <UserFeed 
-                        username={username}
-                        postIDs={profile.submitted}
-                        style={style}
-                    />
-                }   
+                    <div className="container">
+                        <div className="flex container-sm col">
+                            <h1 className="userHeading" 
+                                style={style === 'light' ? userHeadingLight : userHeadingDark}>
+                                {profile.id}
+                            </h1>
+                            <p className="userInfo">joined 
+                                <span className="userData"> {getItemDate(profile.created)} </span>
+                                has <span className="userData">{profile.karma} </span>karma
+                            </p>  
+                        </div>
+                    </div>
+
+                    <React.Fragment>
+                        <UserFeed 
+                            username={username}
+                            postIDs={profile.submitted}
+                            style={style}
+                        />
+                    </React.Fragment>
                 </React.Fragment>
-            
+                }
             </React.Fragment>
         )
     }
@@ -185,14 +181,7 @@ class UserFeed extends React.Component {
             posts: null
         };
     }
-/*
-    componentDidMount() {
-        getUserPosts(this.props.username)
-            .then(posts => this.setState({
-                posts: posts
-            }))
-    }
-*/
+
     render() {
         return (
             <div className="container">
@@ -211,14 +200,6 @@ class User extends React.Component {
         this.state = {
             posts: null
         };
-    
-        this.getPostIds = this.getPostIds.bind(this);
-    }
-
-    getPostIds(ids) {
-        this.setState({
-            posts: ids
-        })
     }
 
     render() {
@@ -229,7 +210,6 @@ class User extends React.Component {
                 <UserProfile 
                     username={username} 
                     style={style} 
-                    getPostIds={() => this.getPostIds()}
                 />      
             </div>
         )
