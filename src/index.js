@@ -12,15 +12,30 @@ class Nav extends React.Component {
     render() {
         const { feed, setFeed, toggleStyles, style } = this.props; 
 
+        const lightNav = {
+            color: '#000',
+        }
+
+        const darkNav = {
+            color: '#CBCBCB',
+        }
+
+        const active = {
+            color: '#BB2E1F'
+        }
+
+        // Determine the correct nav style, then fall back on it for the feed that isn't active.
+        const navStyle = style === "light" ? lightNav : darkNav;
+
         return (
             <div className="container">
                 <ul className="flex between row container-sm clear">
                     <div className="flex">
-                        <li className={`nav-font ${feed === 'top' && 'active'}`} onClick={() => setFeed('top')}>Top</li>
-                        <li className={`nav-font ${feed === 'new' && 'active'}`} onClick={() => setFeed('new')}>New</li>
+                        <li style={feed === 'top' ? active : navStyle} className="navLinks" onClick={() => setFeed('top')}>Top</li>
+                        <li style={feed === 'new' ? active : navStyle} className="navLinks" onClick={() => setFeed('new')}>New</li>
                     </div>
                     <div className="flex">
-                        <li className="nav-font" ><FontAwesomeIcon onClick={toggleStyles} className="lightbulb" icon={style === 'light' ? lightStyles : darkStyles} /></li>
+                        <li className="navLinks" ><FontAwesomeIcon onClick={toggleStyles} className="lightbulb" icon={style === 'light' ? lightStyles : darkStyles} /></li>
                     </div>
                 </ul><br></br>
             </div>
@@ -58,6 +73,27 @@ class Feed extends React.Component {
 
     render() {
         const { items } = this.state;
+        const { style } = this.props;
+
+        const lightTitle = {
+            color: '#BB2E1F',
+        }
+
+        const darkTitle = {
+            color: '#CBCBCB',
+        }
+
+        const lightLink = {
+            color: '#000',
+        }
+
+        const darkLink = {
+            color: '#BEBEBE',
+        }
+
+        const titleStyle = style === 'light' ? lightTitle : darkTitle;
+        const linkStyle = style === 'light' ? lightLink : darkLink;
+
         return (
             <div className="container">
                 <div className="flex col container-sm">
@@ -65,8 +101,8 @@ class Feed extends React.Component {
                         { items != null && items.map((item) => {
                             return (
                                 <li className="item" key={item.id}> 
-                                    <p><a className="title" href={item.url}>{item.title}</a></p>
-                                    <p className="info">by <a className="infoLink" href="#">{item.by}</a> on {getItemDate(item.time)} with <a className="infoLink" href="#">{item.kids != null ? item.kids.length : '0'}</a> comments</p>
+                                    <p><a style={titleStyle} className="title" href={item.url}>{item.title}</a></p>
+                                    <p className="info">by <a className="infoLink" style={linkStyle} href="#">{item.by}</a> on {getItemDate(item.time)} with <a style={linkStyle} className="infoLink" href="#">{item.kids != null ? item.kids.length : '0'}</a> comments</p>
                                 </li>)
                             })
                         }
@@ -106,8 +142,16 @@ class App extends React.Component {
     }
 
     render() {
+        const darkBody = {
+            backgroundColor: "#1C2022",
+        }
+
+        const lightBody = {
+            backgroundColor: "white",
+        }
+
         return (
-            <React.Fragment>
+            <body style={this.state.style == 'light' ? lightBody : darkBody}>
                 <Nav 
                     setFeed={this.setFeed}
                     toggleStyles={this.toggleStyles}
@@ -116,8 +160,9 @@ class App extends React.Component {
                 />
                 <Feed 
                     feed={this.state.feed}
+                    style={this.state.style}
                 />
-            </React.Fragment>
+            </body>
         )
     }
 }
