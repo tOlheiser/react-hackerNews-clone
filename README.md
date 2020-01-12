@@ -25,3 +25,9 @@ An array of posts, each containing the:
 * Comments
 
 The time is in an unformatted number format, and each post contains comment ID's. I'll have to iterate over each comment, send a request, and pull the comment data to display it.
+
+## User View
+I need to fetch two things: 
+* User information 
+* Stories the user has contributed. 
+These will be separated into two components. 
