@@ -91,3 +91,20 @@ When I click on 'Top' or 'New':
 
 When I click on the lightbulb:
 * Toggles the styles across the whole app.
+
+
+# User View
+
+The component structure I came up with is:
+```javascript
+<User />
+    <UserProfile />
+    <UserFeed />
+```
+
+## Grabbing the User Profile
+
+Click event: When the user clicks on the username attached to a story in the main feed:
+1. Sets the state of the 'user' in the App component.
+2. The username is passed as props into the User component
+3. The username is passed as props from the User component into the UserProfile and UserFeed components.
