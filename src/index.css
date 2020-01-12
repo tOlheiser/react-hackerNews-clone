@@ -76,3 +76,30 @@
   color: #BB2E1F;
   font-size: 1.7em;
 }
+
+/* User View Styles */
+.userHeading {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+  color: #000;
+}
+
+.userInfo {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  color: #808080;
+  padding-top: .75em;
+}
+
+.userData {
+  font-weight: bold;
+}
+
+h2 {
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+  font-family: 'Segoi UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+}
