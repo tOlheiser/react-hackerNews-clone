@@ -114,6 +114,43 @@ class Feed extends React.Component {
     }
 }
 
+class UserProfile extends React.Component {
+
+    render() {
+        return (
+            <div>
+                
+            </div>
+        )
+    }
+}
+
+class UserFeed extends React.Component {
+
+    render() {
+        return (
+            <div>
+                
+            </div>
+        )
+    }
+}
+
+class User extends React.Component {
+
+
+    render() {
+        const { username } = this.props;
+
+        return (
+            <div>
+                <UserProfile username={username} />
+                <UserFeed username={username} />           
+            </div>
+        )
+    }
+}
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -158,10 +195,14 @@ class App extends React.Component {
                     feed={this.state.feed}
                     style={this.state.style}
                 />
-                <Feed 
+                { /* <Feed 
                     feed={this.state.feed}
                     style={this.state.style}
+                /> */ }
+                <User 
+                    username="danabramov"
                 />
+
             </body>
         )
     }
