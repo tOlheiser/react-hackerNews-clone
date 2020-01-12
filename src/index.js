@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './reset.css';
 import './index.css';
-import { getMainFeed, getUserProfile, getItemDate } from './api.js';
+import { getMainFeed, getUserProfile, getUserPosts, getItemDate } from './api.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb as lightStyles } from '@fortawesome/free-solid-svg-icons';
 import { faLightbulb as darkStyles } from '@fortawesome/free-regular-svg-icons';
@@ -126,13 +126,13 @@ class UserProfile extends React.Component {
     componentDidMount() {
         getUserProfile(this.props.username)
             .then((profile) => this.setState({
-                profile: profile
-            }))
+                profile: profile,
+            }));
     }
 
     render() {
         const { profile } = this.state;
-        const { style } = this.props;
+        const { style, username } = this.props;
 
         const userHeadingLight = {
             color: "#000"
@@ -144,27 +144,55 @@ class UserProfile extends React.Component {
 
         return (
             <React.Fragment>
-            {profile != null && 
-            <div className="container">
-                <div className="flex container-sm col">
-                    <h1 className="userHeading" style={style === 'light' ? userHeadingLight : userHeadingDark}>
-                        {profile.id}
-                    </h1>
-                    <p className="userInfo">joined 
-                        <span className="userData"> {getItemDate(profile.created)} </span>
-                        has <span className="userData">{profile.karma} </span>karma
-                    </p>
-                    
+
+                <React.Fragment>
+                {profile != null && 
+                <div className="container">
+                    <div className="flex container-sm col">
+                        <h1 className="userHeading" style={style === 'light' ? userHeadingLight : userHeadingDark}>
+                            {profile.id}
+                        </h1>
+                        <p className="userInfo">joined 
+                            <span className="userData"> {getItemDate(profile.created)} </span>
+                            has <span className="userData">{profile.karma} </span>karma
+                        </p>
+                        
+                    </div>
                 </div>
-            </div>
-            }
+                }
+                </React.Fragment>
+
+                <React.Fragment>
+                {profile != null &&
+                    <UserFeed 
+                        username={username}
+                        postIDs={profile.submitted}
+                        style={style}
+                    />
+                }   
+                </React.Fragment>
+            
             </React.Fragment>
         )
     }
 }
 
 class UserFeed extends React.Component {
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            posts: null
+        };
+    }
+/*
+    componentDidMount() {
+        getUserPosts(this.props.username)
+            .then(posts => this.setState({
+                posts: posts
+            }))
+    }
+*/
     render() {
         return (
             <div className="container">
@@ -177,15 +205,32 @@ class UserFeed extends React.Component {
 }
 
 class User extends React.Component {
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            posts: null
+        };
+    
+        this.getPostIds = this.getPostIds.bind(this);
+    }
+
+    getPostIds(ids) {
+        this.setState({
+            posts: ids
+        })
+    }
 
     render() {
         const { username, style } = this.props;
 
         return (
             <div>
-                <UserProfile username={username} style={style} />
-                <UserFeed username={username} style={style} />           
+                <UserProfile 
+                    username={username} 
+                    style={style} 
+                    getPostIds={() => this.getPostIds()}
+                />      
             </div>
         )
     }
@@ -214,7 +259,7 @@ class App extends React.Component {
     toggleStyles() {
         // Setting state based on previous state
         this.setState((state) => ({
-            style: state.style == 'light' ? 'dark' : 'light'
+            style: state.style === 'light' ? 'dark' : 'light'
         }));
     }
 
@@ -228,7 +273,7 @@ class App extends React.Component {
         }
 
         return (
-            <body style={this.state.style == 'light' ? lightBody : darkBody}>
+            <body style={this.state.style === 'light' ? lightBody : darkBody}>
                 <Nav 
                     setFeed={this.setFeed}
                     toggleStyles={this.toggleStyles}
