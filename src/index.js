@@ -143,17 +143,22 @@ class UserProfile extends React.Component {
         }
 
         return (
+            <React.Fragment>
+            {profile != null && 
             <div className="container">
                 <div className="flex container-sm col">
                     <h1 className="userHeading" style={style === 'light' ? userHeadingLight : userHeadingDark}>
-                        {profile != null && profile.id}
+                        {profile.id}
                     </h1>
                     <p className="userInfo">joined 
-                        <span className="userData"> {profile != null && getItemDate(profile.created)} </span>
-                        has <span className="userData">{profile != null && profile.karma} </span>karma
+                        <span className="userData"> {getItemDate(profile.created)} </span>
+                        has <span className="userData">{profile.karma} </span>karma
                     </p>
+                    
                 </div>
             </div>
+            }
+            </React.Fragment>
         )
     }
 }
