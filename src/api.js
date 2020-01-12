@@ -9,6 +9,12 @@ export function getMainFeed(feed) {
         )))
 }
 
+export function getUserProfile(username) {
+  return fetch(`https://hacker-news.firebaseio.com/v0/user/${username}.json?print=pretty`)
+    .then(response => response.json())
+    //.then(response => console.log(response))
+}
+
 export function getItemDate(time) {
   let dateObj = new Date(time * 1000);
 
