@@ -133,3 +133,31 @@ h2 {
 .headingLink {
   text-decoration: none;
 }
+
+.commentContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.commentSmContainer {
+  margin: .4em 0 .4em 0;
+  width: 80%;
+  background-color: #EDEDED;
+  border-radius: 5px;
+  /* include rounder border */
+}
+
+p {
+  padding: .5em 0 .5em 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+}
+
+.commentText {
+  padding: .8em;
+}
+
+.commentInfo {
+  color: #808080;
+}
