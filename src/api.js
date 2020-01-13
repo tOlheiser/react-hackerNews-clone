@@ -12,7 +12,19 @@ export function getMainFeed(feed) {
 export function getUserProfile(username) {
   return fetch(`https://hacker-news.firebaseio.com/v0/user/${username}.json?print=pretty`)
     .then(response => response.json())
-    //.then(response => console.log(response))
+}
+
+export function getUserPosts(postIDs) {
+    // Reduces what could be an array of 1000's of items down to 50
+    postIDs = postIDs.slice(0, 100);
+
+    // running a fetch request on every item ID.
+    return Promise.all(postIDs.map(id => 
+      fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
+        // convert the response to json
+        .then(response => response.json())
+      )) // of the items received, I only want the stories. 
+      .then(items => items.filter(item => item.type === "story"))
 }
 
 export function getItemDate(time) {
