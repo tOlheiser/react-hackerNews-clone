@@ -298,7 +298,10 @@ class Comment extends React.Component {
                     </React.Fragment>
 
                     <React.Fragment>
-                        <Comments commentIDs={post.kids}/>
+                        <Comments 
+                            commentIDs={post.kids} 
+                            style={style}
+                            />
                     </React.Fragment>
                 </React.Fragment>
             }
@@ -325,18 +328,50 @@ class Comments extends React.Component {
 
     render() {
         const { comments } = this.state;
+        const { style } = this.props;
 
+        const lightUsername = {
+            color: "#000",
+        }
+
+        const darkUsername = {
+            color: "#BEBEBE",
+        }
+
+        const lightContent = {
+            color: "#000",
+        }
+
+        const darkContent = {
+            color: "#DADADA",
+        }
+
+        const lightContainer = {
+            backgroundColor: "#EDEDED",
+        }
+
+        const darkContainer = {
+            backgroundColor: "#2A2D2F",
+        }
+
+        if (comments != null) {
+            console.log(comments[0].text)
+        }
         return (
             <React.Fragment>
+                <ul>
                 {comments != null && comments.map(comment => 
-                    <div className="commentContainer">
-                        <div className="flex commentSmContainer col">
-                            <p>by <a href="#">{comment.by}</a> on {getItemDate(comment.time)}</p>
-                            <p>{comment.text}</p>
+                    <li key={comment.id}>
+                        <div className="commentContainer">
+                            <div className="flex commentSmContainer col" style={style === "light" ? lightContainer : darkContainer}>
+                                <p className="commentText commentInfo">by <a href="#" style={style === "light" ? lightUsername : darkUsername}>{comment.by}</a> on {getItemDate(comment.time)}</p>
+                                <p className="commentText" style={style === "light" ? lightContent : darkContent} dangerouslySetInnerHTML={{__html: comment.text}}></p>
+                            </div>
                         </div>
-                    </div>
+                    </li>
                 )
                 }
+                </ul>
             </React.Fragment>
         )
     }
