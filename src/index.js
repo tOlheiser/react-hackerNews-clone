@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './reset.css';
 import './index.css';
-import { getMainFeed, getUserProfile, getUserPosts, getItemDate } from './api.js';
+import { getMainFeed, getUserProfile, getUserPosts, getItemDate, getPost } from './api.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb as lightStyles } from '@fortawesome/free-solid-svg-icons';
 import { faLightbulb as darkStyles } from '@fortawesome/free-regular-svg-icons';
@@ -241,6 +241,93 @@ class UserFeed extends React.Component {
     }
 }
 
+class Comment extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            post: null,
+        }
+    }
+
+    componentDidMount() {
+        getPost(this.props.postID)
+            .then(post => this.setState({
+                post: post
+            }))
+    }
+
+    render() {
+        const { post } = this.state;
+        const { style } = this.props;
+
+        const postHeadingLight = {
+            color: '#BB2E1F',
+        }
+
+        const postHeadingDark = {
+            color: '#CBCBCB',
+        }
+
+        const lightLink = {
+            color: '#000',
+            textDecoration: "underline",
+        }
+
+        const darkLink = {
+            color: '#BEBEBE',
+            textDecoration: "underline",
+        }
+
+        return (
+            <React.Fragment>
+            {this.state.post != null &&
+                <React.Fragment>
+                    <React.Fragment>
+                    <div className="container">
+                        <div className="flex container-sm col">
+                            <h1 className="postHeading">
+                                <a className="headingLink" style={style === 'light' ? postHeadingLight : postHeadingDark} href={post.url}>
+                                    {post.title}
+                                </a>
+                            </h1>
+                            <p className="userInfo">by <a style={style === 'light' ? lightLink : darkLink} href="#">{post.by}</a> on {getItemDate(post.time)} with <span style={style === 'light' ? lightLink : darkLink}>{post.descendants}</span> {post.descendants !== 1 ? "comments" : "comment"}</p>  
+                        </div>
+                    </div>
+                    </React.Fragment>
+
+                    <React.Fragment>
+                        <Comments commentIDs={post.kids}/>
+                    </React.Fragment>
+                </React.Fragment>
+            }
+            </React.Fragment>
+        )
+    }
+}
+
+class Comments extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            comments: null,
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            comments: "Hi",
+        })
+    }
+
+    render() {
+        return (
+            <h1>{this.state.comments}</h1>
+        )
+    }
+}
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -284,16 +371,20 @@ class App extends React.Component {
                     toggleStyles={this.toggleStyles}
                     feed={this.state.feed}
                     style={this.state.style}
-                />
-                { /* <Feed 
-                    feed={this.state.feed}
-                    style={this.state.style}
-                /> */ }
+                /> { /*
                 <User 
                     username="danabramov"
                     style={this.state.style}
                 />
-
+                 <Feed 
+                    feed={this.state.feed}
+                    style={this.state.style}
+                /> */ }
+                 
+                <Comment 
+                    postID="22022466"
+                    style={this.state.style}
+                /> 
             </div>
         )
     }
