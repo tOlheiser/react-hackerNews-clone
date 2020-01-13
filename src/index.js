@@ -217,18 +217,24 @@ class UserFeed extends React.Component {
             <div className="container">
                 <div className="flex container-sm col">
                     <h2 style={style === 'light' ? lightHeading : darkTitle}>Posts</h2>
+                    <ul>
                     {posts != null && 
                         posts.map(post => {
                             return (
                                 <React.Fragment>
-                                    <h2 className="postTitle"><a href={post.url} className="title" style={style === 'light' ? lightTitle : darkTitle}>{post.title}</a></h2>
-                                    <p className="info">by <a className="infoLink" href="#" style={style === 'light' ? lightLink : darkLink}>{username}</a> on {getItemDate(post.time)} with <a className="infoLink" href="#" style={style === 'light' ? lightLink : darkLink}>{post.descendants}</a> 
-                                        {post.descendants !== 1 ? " comments" : " comment"}
-                                    </p>
+                                    <li className="item" key={posts.id}>
+                                        <h3 className="postTitle">
+                                            <a href={post.url} className="title" style={style === 'light' ? lightTitle : darkTitle}>{post.title}</a>
+                                        </h3>
+                                        <p className="info">by <a className="infoLink" href="#" style={style === 'light' ? lightLink : darkLink}>{username}</a> on {getItemDate(post.time)}     with <a className="infoLink" href="#" style={style === 'light' ? lightLink : darkLink}>{post.descendants}</a> 
+                                            {post.descendants !== 1 ? " comments" : " comment"}
+                                        </p>
+                                    </li>
                                 </React.Fragment>
                             )
                         })
                     }
+                    </ul>
                 </div>
             </div>
         )
