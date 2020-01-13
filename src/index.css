@@ -122,4 +122,14 @@ h2 {
   height: 100vh;
 }
 
+/* Comment View */
+.postHeading {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+  color: #000;
+}
 
+.headingLink {
+  text-decoration: none;
+}
