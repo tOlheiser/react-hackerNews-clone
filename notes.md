@@ -160,3 +160,58 @@ Solution: wrap everything inside of a React.Fragment.
     }
 </React.Fragment>
 ```
+
+## Getting User Posts
+
+It seems I have a few options here:
+1. Run another fetch request for the user when the UserFeed component mounts, grab their IDs, then run requests on each ID. 
+
+2. Take the post ID's from the state object in UserProfile, lift them up to User, then pass them down to UserFeed. *This is something I attempted to do. I tried to run 'componentDidUpdate' to ensure I had the data from the requrest. Inside componentDidUpdate, I had a function passed through props which would update the parent component with that data. It gave me the error, 'maximum update depth exceeded'.*
+
+3. Run the first fetch request inside User. Pass 'created', 'karma', and 'Bio' to UserProfile, and 'item IDs' to UserFeed. 
+
+4. Nest the Posts inside of the UserProfile component. Pass the profile info down to Posts as props from UserProfile.
+
+**Learning moment**: When contemplating passing data between siblings, consider nesting one sibling inside the other. Data flow is far easier this way. 
+
+**Issues with my function using Promise.all**
+
+With the below code, I was getting the error, "items.filter is not a function". This was confusing to me.
+
+```javascript
+export function getUserPosts(postIDs) {
+    // Reduces what could be an array of 1000's of items down to 50
+    postIDs = postIDs.slice(0, 100);
+
+    // running a fetch request on every item ID.
+    return Promise.all(postIDs.map(id => 
+      fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
+        // convert the response to json
+        .then(response => response.json())
+        // of the items received, I only want the stories. 
+        .then(items => items.filter(item => item.type === "story"))
+      )) 
+}
+```
+
+**Solution**
+
+Turns out I had to place my .then with the filter function one level higher (outside of the Promise.all). This was so I could filter over the response data Promise.all returned, as opposed to trying to filter on every request. 
+
+```javascript
+export function getUserPosts(postIDs) {
+    // Reduces what could be an array of 1000's of items down to 50
+    postIDs = postIDs.slice(0, 100);
+
+    // running a fetch request on every item ID.
+    return Promise.all(postIDs.map(id => 
+      fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
+        // convert the response to json
+        .then(response => response.json())
+      )) // of the items received, I only want the stories. 
+      .then(items => items.filter(item => item.type === "story"))
+}
+```
+
+## Issue: 
+The 'Posts' h2 loads before my data loads in the UserProfile component.
