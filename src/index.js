@@ -101,7 +101,7 @@ class Feed extends React.Component {
                         { items != null && items.map((item) => {
                             return (
                                 <li className="item" key={item.id}> 
-                                    <p><a style={titleStyle} className="title" href={item.url}>{item.title}</a></p>
+                                    <h2><a style={titleStyle} className="title" href={item.url}>{item.title}</a></h2>
                                     <p className="info">by <a className="infoLink" style={linkStyle} href="#">{item.by}</a> on {getItemDate(item.time)} with <a style={linkStyle} className="infoLink" href="#">{item.kids != null ? item.kids.length : '0'}</a> comments</p>
                                 </li>)
                             })
@@ -190,10 +190,25 @@ class UserFeed extends React.Component {
     }
 
     render() {
+        const { username, style } = this.props;
+        const { posts } = this.state;
+
         return (
             <div className="container">
                 <div className="flex container-sm col">
                     <h2>Posts</h2>
+                    {posts != null && 
+                        posts.map(post => {
+                            return (
+                                <React.Fragment>
+                                    <h2 className="postTitle"><a href={post.url} className="title">{post.title}</a></h2>
+                                    <p className="info">by <a className="infoLink" href="#">{username}</a> on {getItemDate(post.time)} with <a className="infoLink" href="#">{post.descendants}</a> 
+                                        {post.descendants !== 1 ? " comments" : " comment"}
+                                    </p>
+                                </React.Fragment>
+                            )
+                        })
+                    }
                 </div>
             </div>
         )
