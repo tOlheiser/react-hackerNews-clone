@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './reset.css';
 import './index.css';
-import { getMainFeed, getUserProfile, getUserPosts, getItemDate, getPost } from './api.js';
+import { getMainFeed, getUserProfile, getUserPosts, getItemDate, getPost, getComments } from './api.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb as lightStyles } from '@fortawesome/free-solid-svg-icons';
 import { faLightbulb as darkStyles } from '@fortawesome/free-regular-svg-icons';
+import { cpus } from 'os';
 
 class Nav extends React.Component {
 
@@ -316,14 +317,27 @@ class Comments extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-            comments: "Hi",
-        })
+        getComments(this.props.commentIDs)
+            .then(item => this.setState({
+                comments: item
+            }))
     }
 
     render() {
+        const { comments } = this.state;
+
         return (
-            <h1>{this.state.comments}</h1>
+            <React.Fragment>
+                {comments != null && comments.map(comment => 
+                    <div className="commentContainer">
+                        <div className="flex commentSmContainer col">
+                            <p>by <a href="#">{comment.by}</a> on {getItemDate(comment.time)}</p>
+                            <p>{comment.text}</p>
+                        </div>
+                    </div>
+                )
+                }
+            </React.Fragment>
         )
     }
 }
