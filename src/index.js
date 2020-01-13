@@ -193,16 +193,32 @@ class UserFeed extends React.Component {
         const { username, style } = this.props;
         const { posts } = this.state;
 
+        const lightTitle = {
+            color: '#000',
+        }
+
+        const darkTitle = {
+            color: '#CBCBCB',
+        }
+
+        const lightLink = {
+            color: '#000',
+        }
+
+        const darkLink = {
+            color: '#BEBEBE',
+        }
+
         return (
             <div className="container">
                 <div className="flex container-sm col">
-                    <h2>Posts</h2>
+                    <h2 style={style === 'light' ? lightTitle : darkTitle}>Posts</h2>
                     {posts != null && 
                         posts.map(post => {
                             return (
                                 <React.Fragment>
-                                    <h2 className="postTitle"><a href={post.url} className="title">{post.title}</a></h2>
-                                    <p className="info">by <a className="infoLink" href="#">{username}</a> on {getItemDate(post.time)} with <a className="infoLink" href="#">{post.descendants}</a> 
+                                    <h2 className="postTitle"><a href={post.url} className="title" style={style === 'light' ? lightTitle : darkTitle}>{post.title}</a></h2>
+                                    <p className="info">by <a className="infoLink" href="#" style={style === 'light' ? lightLink : darkLink}>{username}</a> on {getItemDate(post.time)} with <a className="infoLink" href="#" style={style === 'light' ? lightLink : darkLink}>{post.descendants}</a> 
                                         {post.descendants !== 1 ? " comments" : " comment"}
                                     </p>
                                 </React.Fragment>
@@ -275,7 +291,7 @@ class App extends React.Component {
         }
 
         return (
-            <body style={this.state.style === 'light' ? lightBody : darkBody}>
+            <div className="body" style={this.state.style === 'light' ? lightBody : darkBody}>
                 <Nav 
                     setFeed={this.setFeed}
                     toggleStyles={this.toggleStyles}
@@ -291,7 +307,7 @@ class App extends React.Component {
                     style={this.state.style}
                 />
 
-            </body>
+            </div>
         )
     }
 }
