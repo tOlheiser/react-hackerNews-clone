@@ -30,6 +30,13 @@ export function getPost(postID) {
     .then(response => response.json())
 }
 
+export function getComments(ids) {
+  return Promise.all(ids.map(id =>
+    fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
+      .then(response => response.json())
+  ))
+}
+
 export function getItemDate(time) {
   let dateObj = new Date(time * 1000);
 
