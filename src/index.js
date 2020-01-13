@@ -182,6 +182,13 @@ class UserFeed extends React.Component {
         };
     }
 
+    componentDidMount() {
+        getUserPosts(this.props.postIDs)
+            .then(posts => this.setState({
+                posts: posts
+            }))
+    }
+
     render() {
         return (
             <div className="container">
