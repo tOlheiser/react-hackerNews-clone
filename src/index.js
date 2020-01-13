@@ -193,8 +193,12 @@ class UserFeed extends React.Component {
         const { username, style } = this.props;
         const { posts } = this.state;
 
+        const lightHeading = {
+            color: "#000",
+        }
+
         const lightTitle = {
-            color: '#000',
+            color: '#BB2E1F',
         }
 
         const darkTitle = {
@@ -212,7 +216,7 @@ class UserFeed extends React.Component {
         return (
             <div className="container">
                 <div className="flex container-sm col">
-                    <h2 style={style === 'light' ? lightTitle : darkTitle}>Posts</h2>
+                    <h2 style={style === 'light' ? lightHeading : darkTitle}>Posts</h2>
                     {posts != null && 
                         posts.map(post => {
                             return (
