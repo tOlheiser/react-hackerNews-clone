@@ -16,15 +16,18 @@ export function getUserProfile(username) {
 
 export function getUserPosts(postIDs) {
     // Reduces what could be an array of 1000's of items down to 50
-    postIDs = postIDs.slice(0, 100);
+    postIDs = postIDs.slice(0, 50);
 
     // running a fetch request on every item ID.
     return Promise.all(postIDs.map(id => 
-      fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
-        // convert the response to json
-        .then(response => response.json())
-      )) // of the items received, I only want the stories. 
-      .then(items => items.filter(item => item.type === "story"))
+      getPost(id)
+      )) // of the items received, I only want only stories, and only stories that haven't been deleted. 
+        .then(items => items.filter(item => item.type === "story").filter(item => item.deleted !== true))
+}
+
+export function getPost(postID) {
+  return fetch(`https://hacker-news.firebaseio.com/v0/item/${postID}.json?print=pretty`)
+    .then(response => response.json())
 }
 
 export function getItemDate(time) {
