@@ -114,7 +114,7 @@ class Feed extends React.Component {
     }
 }
 
-class UserProfile extends React.Component {
+class User extends React.Component {
     constructor(props) {
         super(props);
 
@@ -236,29 +236,6 @@ class UserFeed extends React.Component {
                     }
                     </ul>
                 </div>
-            </div>
-        )
-    }
-}
-
-class User extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            posts: null
-        };
-    }
-
-    render() {
-        const { username, style } = this.props;
-
-        return (
-            <div>
-                <UserProfile 
-                    username={username} 
-                    style={style} 
-                />      
             </div>
         )
     }
