@@ -20,7 +20,7 @@ class Loading extends React.Component {
     }
 
     componentDidMount() {
-        this.interval = setInterval(this.loadingMessage, 1000);
+        this.interval = setInterval(this.loadingMessage, 400);
     }
 
     componentWillUnmount() {
@@ -43,7 +43,11 @@ class Loading extends React.Component {
 
     render() {
         return(
-            <h2>{this.state.loading}</h2>    
+            <div className="container">
+                <div className="flex container-sm col">
+                    <h2 className="center">{this.state.loading}</h2>        
+                </div>
+            </div>  
         )
     }
 }
@@ -139,10 +143,14 @@ class Feed extends React.Component {
             <div className="container">
                 <div className="flex col container-sm">
                     <ul>
-                        { items != null && items.map((item) => {
+                        { items == null ? 
+                        <React.Fragment>
+                            <Loading loading="Loading" />
+                        </React.Fragment>
+                        : items.map((item) => {
                             return (
                                 <li className="item" key={item.id}> 
-                                    <h2><a style={titleStyle} className="title" href={item.url}>{item.title}</a></h2>
+                                    <h2 class="postHeading"><a style={titleStyle} className="title" href={item.url}>{item.title}</a></h2>
                                     <p className="info">by <a className="infoLink" style={linkStyle} href="#">{item.by}</a> on {getItemDate(item.time)} with <a style={linkStyle} className="infoLink" href="#">{item.kids != null ? item.kids.length : '0'}</a> comments</p>
                                 </li>)
                             })
@@ -185,8 +193,12 @@ class User extends React.Component {
 
         return (
             <React.Fragment>    
-                {profile != null && 
+                {profile == null ? 
                 <React.Fragment>
+                    <Loading loading="Fetching user" /> 
+                </React.Fragment>
+                
+                : <React.Fragment>
                     <div className="container">
                         <div className="flex container-sm col">
                             <h1 className="userHeading" 
@@ -255,29 +267,33 @@ class UserFeed extends React.Component {
         }
 
         return (
-            <div className="container">
-                <div className="flex container-sm col">
-                    <h2 style={style === 'light' ? lightHeading : darkTitle}>Posts</h2>
-                    <ul>
-                    {posts != null && 
-                        posts.map(post => {
-                            return (
-                                <React.Fragment>
-                                    <li className="item" key={posts.id}>
-                                        <h3 className="postTitle">
-                                            <a href={post.url} className="title" style={style === 'light' ? lightTitle : darkTitle}>{post.title}</a>
-                                        </h3>
-                                        <p className="info">by <a className="infoLink" href="#" style={style === 'light' ? lightLink : darkLink}>{username}</a> on {getItemDate(post.time)}     with <a className="infoLink" href="#" style={style === 'light' ? lightLink : darkLink}>{post.descendants}</a> 
-                                            {post.descendants !== 1 ? " comments" : " comment"}
-                                        </p>
-                                    </li>
-                                </React.Fragment>
-                            )
-                        })
-                    }
-                    </ul>
-                </div>
-            </div>
+            <React.Fragment>
+                {posts == null ?
+                    <React.Fragment>
+                        <Loading loading="Fetching posts" />
+                    </React.Fragment>
+                        
+                    : <div className="container">
+                        <div className="flex container-sm col">
+                            <h2 style={style === 'light' ? lightHeading : darkTitle}>Posts</h2>
+                            <ul> {posts.map(post => {
+                                return (
+                                    <React.Fragment>
+                                        <li className="item" key={posts.id}>
+                                            <h3 className="postTitle">
+                                                <a href={post.url} className="title" style={style === 'light' ? lightTitle : darkTitle}>{post.title}</a>
+                                            </h3>
+                                            <p className="info">by <a className="infoLink" href="#" style={style === 'light' ? lightLink : darkLink}>{username}</a> on {getItemDate(post.time)}     with <a className="infoLink" href="#" style={style === 'light' ? lightLink : darkLink}>{post.descendants}</a> 
+                                                {post.descendants !== 1 ? " comments" : " comment"}
+                                            </p>
+                                        </li>
+                                    </React.Fragment>
+                                )
+                            })} </ul>
+                        </div>
+                    </div>
+                }
+            </React.Fragment>
         )
     }
 }
@@ -322,8 +338,12 @@ class Comment extends React.Component {
 
         return (
             <React.Fragment>
-            {this.state.post != null &&
+            {this.state.post == null ? 
                 <React.Fragment>
+                    <Loading loading="Fetching post"/>
+                </React.Fragment> 
+                
+                : <React.Fragment>
                     <React.Fragment>
                     <div className="container">
                         <div className="flex container-sm col">
@@ -394,13 +414,14 @@ class Comments extends React.Component {
             backgroundColor: "#2A2D2F",
         }
 
-        if (comments != null) {
-            console.log(comments[0].text)
-        }
         return (
             <React.Fragment>
                 <ul>
-                {comments != null && comments.map(comment => 
+                {comments == null ? 
+                <React.Fragment>
+                    <Loading loading="Fetching comments"/>
+                </React.Fragment>
+                : comments.map(comment => 
                     <li key={comment.id}>
                         <div className="commentContainer">
                             <div className="flex commentSmContainer col" style={style === "light" ? lightContainer : darkContainer}>
@@ -461,21 +482,19 @@ class App extends React.Component {
                     feed={this.state.feed}
                     style={this.state.style}
                 /> 
-                <Loading loading="Loading"/>
-                { /*
                 <User 
                     username="danabramov"
                     style={this.state.style}
-                />
-                 <Feed 
+                /> 
+                  { /*<Feed 
                     feed={this.state.feed}
                     style={this.state.style}
                 /> */ }
-                 
+                {/*
                 <Comment 
                     postID="22022466"
                     style={this.state.style}
-                /> 
+                />*/} 
             </div>
         )
     }
