@@ -8,6 +8,46 @@ import { faLightbulb as lightStyles } from '@fortawesome/free-solid-svg-icons';
 import { faLightbulb as darkStyles } from '@fortawesome/free-regular-svg-icons';
 import { cpus } from 'os';
 
+class Loading extends React.Component {
+    // componentWillUnmount - clear interval
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            loading: this.props.loading
+        }
+        this.loadingMessage = this.loadingMessage.bind(this);
+    }
+
+    componentDidMount() {
+        this.interval = setInterval(this.loadingMessage, 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    loadingMessage() {
+        const { loading } = this.state;
+        
+        if (loading === this.props.loading + "...") {
+            this.setState({
+                loading: this.props.loading
+            })
+        } else {
+            this.setState(({ loading }) => ({
+                loading: loading + ".",
+            }));
+        }
+    }
+
+    render() {
+        return(
+            <h2>{this.state.loading}</h2>    
+        )
+    }
+}
+
 class Nav extends React.Component {
 
     render() {
@@ -420,7 +460,9 @@ class App extends React.Component {
                     toggleStyles={this.toggleStyles}
                     feed={this.state.feed}
                     style={this.state.style}
-                /> { /*
+                /> 
+                <Loading loading="Loading"/>
+                { /*
                 <User 
                     username="danabramov"
                     style={this.state.style}
