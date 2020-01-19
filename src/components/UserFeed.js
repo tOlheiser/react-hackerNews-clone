@@ -45,29 +45,29 @@ export default class UserFeed extends React.Component {
 
         return (
             <React.Fragment>
-                {posts == null 
-                    ? <Loading loading="Fetching posts" />
-                    : posts == false 
-                    ? <p>This user hasn't posted anything yet</p>
-
-                    : <div className="container">
-                        <div className="flex container-sm col">
-                            <h2 style={lightHeading}>Posts</h2>
-                            <ul> {posts.map(post => {
-                                return (
-                                    <Item 
-                                        id={post.id} 
-                                        url={post.url} 
-                                        title={post.title} 
-                                        author={post.by}
-                                        time={post.time} 
-                                        comments={post.descendants}
-                                    />
-                                )
-                            })} </ul>
-                        </div>
+                <div className="container">
+                    <div className="flex container-sm col">
+                        <h2 style={lightHeading}>Posts</h2>
+                        {posts == null 
+                            ?   <Loading loading="Fetching posts" />
+                            :   posts == false 
+                            ?   <p style={{textAlign: 'center'}}>This user hasn't posted anything yet</p>
+                                    
+                            :   <ul> {posts.map(post => {
+                                    return (
+                                        <Item 
+                                            id={post.id} 
+                                            url={post.url} 
+                                            title={post.title} 
+                                            author={post.by}
+                                            time={post.time} 
+                                            comments={post.descendants}
+                                        />
+                                    )})} 
+                                </ul>
+                        }
                     </div>
-                }
+                </div>
             </React.Fragment>
         )
     }
