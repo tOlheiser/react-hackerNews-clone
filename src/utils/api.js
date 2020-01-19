@@ -6,7 +6,8 @@ export function getMainFeed(feed) {
       .then(ids => Promise.all(ids.map(id => 
         fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
         .then(response => response.json())
-        )))
+      )))
+        .then(items => items.filter(item => item.url != null))
 }
 
 export function getUserProfile(username) {
