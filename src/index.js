@@ -11,7 +11,7 @@ import './index.css';
 import Nav from './components/Nav';
 import Feed from './components/Feed';
 import User from './components/User';
-import Comment from './components/Comment';
+import Post from './components/Post';
 
 class App extends React.Component {
     constructor(props) {
@@ -62,7 +62,7 @@ class App extends React.Component {
                     <Route exact path='/' component={Feed} />
                     <Route path='/new' component={Feed} />
                     <Route path='/user' component={User} />
-                    <Route path='/post' component={Comment}/>
+                    <Route path='/post' component={Post}/>
 
                     {/*
                     <User 

@@ -5,7 +5,7 @@ import { getPost, getItemDate } from '../utils/api.js';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 
-export default class Comment extends React.Component {
+export default class Post extends React.Component {
     constructor(props) {
         super(props);
 
