@@ -55,9 +55,8 @@ export default class User extends React.Component {
                             </p>
 
                             { profile.about != null && 
-                            <p  className="commentText" 
-                                dangerouslySetInnerHTML={{__html: profile.about}}>
-                            </p> }
+                                <p dangerouslySetInnerHTML={{__html: profile.about}}></p> 
+                            }
                         </div>
                     </div>
 
