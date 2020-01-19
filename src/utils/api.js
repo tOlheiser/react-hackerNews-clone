@@ -22,7 +22,11 @@ export function getUserPosts(postIDs) {
     return Promise.all(postIDs.map(id => 
       getPost(id)
       )) // of the items received, I only want only stories, and only stories that haven't been deleted. 
-        .then(items => items.filter(item => item.type === "story").filter(item => item.deleted !== true))
+        .then(items => 
+          items.filter(item => item.type === "story")
+               .filter(item => item.deleted !== true)
+               .filter(item => item.url != null)
+        )
 }
 
 export function getPost(postID) {
@@ -35,6 +39,9 @@ export function getComments(ids) {
     fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
       .then(response => response.json())
   ))
+    .then(comments => 
+      comments.filter(comment => comment.deleted != true)
+    )
 }
 
 export function getItemDate(time) {
