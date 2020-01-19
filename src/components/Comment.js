@@ -76,11 +76,15 @@ export default class Comment extends React.Component {
                                 
                                 {post.descendants !== 1 ? " comments" : " comment"}
                             </p>  
+
+                            {post.text !== null &&
+                            <p dangerouslySetInnerHTML={{__html: post.text}}></p>}
                         </div>
                     </div>
-
+                    
                     <Comments 
                         commentIDs={post.kids}
+                        numComments={post.descendants}
                     />
                 </React.Fragment>
             }
