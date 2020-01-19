@@ -21,7 +21,7 @@ export default class Comments extends React.Component {
 
     render() {
         const { comments } = this.state;
-        const { style } = this.props;
+        const { numComments } = this.props;
 
         const lightUsername = {
             color: "#000",
@@ -50,34 +50,35 @@ export default class Comments extends React.Component {
         return (
             <React.Fragment>
                 <ul>
-                {comments == null 
-                ? <Loading loading="Fetching comments"/>
+                    {numComments != 0 ? 
+                        (comments == null 
+                            ? <Loading loading="Fetching comments"/>
+                            : comments.map(comment => 
+                                <li key={comment.id}>
+                                    <div className="commentContainer">
+                                        <div className="flex commentSmContainer col" style={lightContainer}>
+                                            <p className="commentText commentInfo">{`by `}
+                                                <Link className="infoLink" to={{
+                                                    pathname: '/user',
+                                                    search: `?id=${comment.by}`
+                                                }}>
+                                                    {comment.by}
+                                                </Link>
 
-                : comments.map(comment => 
-                    <li key={comment.id}>
-                        <div className="commentContainer">
-                            <div className="flex commentSmContainer col" style={lightContainer}>
-                                <p className="commentText commentInfo">{`by `}
-                                    <Link className="infoLink" to={{
-                                        pathname: '/user',
-                                        search: `?id=${comment.by}`
-                                    }}>
-                                        {comment.by}
-                                    </Link>
-
-                                    {`on`}{getItemDate(comment.time)}
-                                </p>
-                                
-                                <p 
-                                    className="commentText" 
-                                    style={lightContent} 
-                                    dangerouslySetInnerHTML={{__html: comment.text}}>
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                )
-                }
+                                                {`on`}{getItemDate(comment.time)}
+                                            </p>
+                                            
+                                            <p 
+                                                className="commentText" 
+                                                style={lightContent} 
+                                                dangerouslySetInnerHTML={{__html: comment.text}}>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            )
+                        ) : null 
+                        }
                 </ul>
             </React.Fragment>
         )
