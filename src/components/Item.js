@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getItemDate } from '../utils/api.js';
-//import User from './User';
-//import Comment from './Comment';
 
 export default function Item(props) {
     const {id, url, title, author, time, comments} = props;
@@ -31,11 +29,4 @@ export default function Item(props) {
         </li>
     )
 }
-
-//<Route path='/user' component={User} />
-//<Route path='/discussion' component={Comment}/>
-
-
-//<Route path={`/user?username=${author}`} />
-//<Route path={`/discussion?id=${id}`} />
 
