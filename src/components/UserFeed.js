@@ -33,7 +33,7 @@ export default class UserFeed extends React.Component {
                                 {posts == null 
                                     ?   <Loading loading="Fetching posts" />
                                     :   posts == false 
-                                    ?   <p style={{textAlign: 'center'}}>This user hasn't posted anything yet</p>
+                                    ?   <p className={`content-${theme}`} style={{textAlign: 'center'}}>This user hasn't posted anything yet</p>
                                             
                                     :   <ul> {posts.map(post => {
                                             return (
