@@ -1,4 +1,5 @@
 import React from 'react';
+import { ThemeConsumer } from '../contexts/theme';
 
 export default class Loading extends React.Component {
     // componentWillUnmount - clear interval
@@ -35,11 +36,15 @@ export default class Loading extends React.Component {
 
     render() {
         return(
-            <div className="container">
-                <div className="flex container-sm col">
-                    <h2 className="center">{this.state.loading}</h2>        
-                </div>
-            </div>  
+            <ThemeConsumer>
+                {({ theme }) => (
+                    <div className="container">
+                        <div className="flex container-sm col">
+                            <h2 className={`center content-${theme}`}>{this.state.loading}</h2>        
+                        </div>
+                    </div>
+                )}
+            </ThemeConsumer>
         )
     }
 }
