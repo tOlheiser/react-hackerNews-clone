@@ -368,3 +368,146 @@ Which looks much better then:
 ```javascript
 className={theme === 'light' ? classNameLight : classNameDark};
 ```
+
+## Quick tip: Destructuring Props
+
+```javascript
+export default function Comment ({ comment }) {
+```
+
+## Styling Data Inside dangerouslySetInnerHTML
+
+Just because you can't target it directly, you can still reach the element by their parent.
+
+```css
+.dark a {
+  color: #DADADA;
+}
+```
+
+## Implementing Class Properties
+
+*Why do my functions need to be arrow functions?*
+*What is a 'static' value inside of a class?*
+
+**Step 1: Install the babel plugin for the class properties proposal**
+```javascript
+npm install --save-dev @babel/plugin-proposal-class-properties
+```
+
+**Step 2: Update your package.json file**
+```javascript
+"babel": {
+    "presets": [
+        // ...
+    ],
+    "plugins": [
+        "@babel/plugin-proposal-class-properties"
+    ]
+}
+```
+
+**Step 3: Remove the Constructor**
+
+Before:
+```javascript
+class PlayerInput extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            username: ''
+        }
+
+        // No more binding 'this'!!
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+}
+```
+
+After:
+```javascript
+class PlayerInput extends React.Component {
+    state {
+        username: ''
+    }
+}
+```
+
+**Step 4: Modify Methods**
+Before:
+```javascript
+handleChange(event) {
+    this.setState({
+        username: event.target.value
+    })
+}
+```
+
+The methods are converted to arrow functions.
+
+After:
+```javascript
+handleChange = (event) => {
+    this.setState({
+        username: event.target.value
+    })
+}
+```
+
+*Drawbacks?*
+
+## Implementing Code Splitting
+
+McGinnis gives an exceptional breakdown at the 6:55 mark of his video.
+
+**If you're not using create-react-app, install the plugin**
+```javascript
+// npm install babel-plugin-syntax-dynamic-import
+```
+
+**Enable your plugin**
+```javascript
+"babel": {
+    "presets": [
+        // ...
+    ],
+    "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "syntax-dynamic-import"
+    ]
+}
+```
+
+```javascript
+import React, { Component } from 'react'
+import Loading from './Loading'
+import DynamicImport from './DynamicImport'
+import { BrowserRouter as Router, Route, Link, } from 'react-router-dom'
+
+//No need for 'import Topics from './Topics'. Instead:
+const Topics = React.lazy(() => import('./Topics'))
+
+...
+
+// Suspense displays the fallback component until the nested components have been loaded.
+<React.Suspense fallback={<Loading />}>
+    <Route exact path='/' component={LazyHome} />
+    <Route path='/topics' component={LazyTopics} />
+    <Route path='/settings' component={LazySettings} />
+</React.Suspense>
+```
+
+Consider using 'error boundaries' for if there is a network failure and the component doesn't load.
+
+## More on Readability: Components
+
+“The separation of container and presentational components.”
+
+If you think about the anatomy of a React component, it usually involves some state, potentially some lifecycle hooks, and markup via JSX. What if, instead of having all of that in one component, we separate the state and the lifecycle hooks from the markup. This leaves us with two components. The first has state, life cycle methods, and is responsible for how the component works. The second receives data via props and is responsible for how the component looks. This approach allows us to have better reusability of our presentational components since they’re no longer coupled to the data they receive. I’ve also found that it will enable you (and newcomers to your project) to better understand the structure of your application. You’re able to swap out the implementation of a component without seeing or caring about the UI and vice versa - designers can tweak the UI without ever having to worry about how those presentational components are receiving data." - Tyler McGinnis
+
+I'm thinking that it would be best to seperate a component into two components: Container and Presentational. 
+
+The container handles state and lifecycle methods.
+
+The presentational is a single component that renders the presentation (which may have more presentational components nested within)
