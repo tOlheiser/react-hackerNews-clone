@@ -3,6 +3,7 @@ import Loading from './Loading';
 import UserFeed from './UserFeed';
 import { getItemDate, getUserProfile } from '../utils/api.js';
 import queryString from 'query-string';
+import { ThemeConsumer } from '../contexts/theme';
 
 export default class User extends React.Component {
     constructor(props) {
@@ -24,15 +25,7 @@ export default class User extends React.Component {
 
     render() {
         const { profile } = this.state;
-        const username = queryString.parse(this.props.location.search).id;     
-
-        const userHeadingLight = {
-            color: "#000"
-        }
-
-        const userHeadingDark = {
-            color: "#DADADA"
-        }
+        const username = queryString.parse(this.props.location.search).id;
 
         return (
             <React.Fragment>    
@@ -41,32 +34,34 @@ export default class User extends React.Component {
                     <Loading loading="Fetching user" /> 
                 </React.Fragment>
                 
-                : <React.Fragment>
-                    <div className="container">
-                        <div className="flex container-sm col">
-                            <h1 className="userHeading" 
-                                style={userHeadingLight}>
-                                {profile.id}
-                            </h1>
+                : <ThemeConsumer>
+                    {({ theme }) => (
+                        <React.Fragment>
+                            <div className="container">
+                                <div className="flex container-sm col">
+                                    <h1 className={`userHeading heading-${theme}`}>
+                                        {profile.id}
+                                    </h1>
 
-                            <p className="userInfo">joined 
-                                <span className="userData"> {getItemDate(profile.created)} </span>
-                                has <span className="userData">{profile.karma.toLocaleString()} </span>karma
-                            </p>
+                                    <p className="userInfo">joined 
+                                        <span className="userData"> {getItemDate(profile.created)} </span>
+                                        has <span className="userData">{profile.karma.toLocaleString()} </span>karma
+                                    </p>
 
-                            { profile.about != null && 
-                                <p dangerouslySetInnerHTML={{__html: profile.about}}></p> 
-                            }
-                        </div>
-                    </div>
+                                    { profile.about != null && 
+                                        <p dangerouslySetInnerHTML={{__html: profile.about}}></p> 
+                                    }
+                                </div>
+                            </div>
 
-                    <React.Fragment>
-                        <UserFeed 
-                            username={username}
-                            postIDs={profile.submitted}
-                        />
-                    </React.Fragment>
-                </React.Fragment>
+                            <React.Fragment>
+                                <UserFeed 
+                                    postIDs={profile.submitted}
+                                />
+                            </React.Fragment>
+                        </React.Fragment>
+                    )}
+                </ThemeConsumer> 
                 }
             </React.Fragment>
         )

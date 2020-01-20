@@ -1,7 +1,7 @@
 import React from 'react';
 import Loading from './Loading';
-import { getMainFeed } from '../utils/api.js';
 import Item from './Item';
+import { getMainFeed } from '../utils/api.js';
 
 export default class Feed extends React.Component {
     constructor(props) {
@@ -16,35 +16,13 @@ export default class Feed extends React.Component {
         const { pathname } = this.props.location;
 
         getMainFeed(pathname === '/new' ? 'new' : 'top')
-        // returns the feed of items in JSON format.
             .then(items => this.setState({
-                //grab the items and store them in the 'items' state.
                 items: items
             }))
     }
 
     render() {
         const { items } = this.state;
-        const { style } = this.props;
-
-        const lightTitle = {
-            color: '#BB2E1F',
-        }
-
-        const darkTitle = {
-            color: '#CBCBCB',
-        }
-
-        const lightLink = {
-            color: '#000',
-        }
-
-        const darkLink = {
-            color: '#BEBEBE',
-        }
-
-        const titleStyle = style === 'light' ? lightTitle : darkTitle;
-        const linkStyle = style === 'light' ? lightLink : darkLink;
 
         return (
             <div className="container">
@@ -61,15 +39,13 @@ export default class Feed extends React.Component {
                                     author={item.by}
                                     time={item.time} 
                                     comments={item.descendants}
+                                    key={item.id}
                                 /> )
                             })
                         }
-                    </ul>
-                    
+                    </ul>  
                 </div>
             </div>
         );
     }
 }
-
-

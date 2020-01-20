@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // Styles
+import { ThemeProvider } from './contexts/theme';
 import './reset.css';
 import './index.css';
-import { ThemeProvider } from './contexts/theme';
 
 // Components
 import Nav from './components/Nav';
@@ -29,22 +29,11 @@ class App extends React.Component {
     }
 
     render() {
-        const darkBody = {
-            backgroundColor: "#1C2022",
-        }
-
-        const lightBody = {
-            backgroundColor: "white",
-        }
-
         return (
             <Router>
                 <ThemeProvider value={ this.state }>
-                    <div className={`bg-${}`} >
-                        <Nav 
-                            toggleStyles={this.toggleStyles}
-                            style={this.state.style}
-                        /> 
+                    <div className={`body bg-${this.state.theme}`} >
+                        <Nav /> 
                         
                         <Route exact path='/' component={Feed} />
                         <Route path='/new' component={Feed} />
