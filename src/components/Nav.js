@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeConsumer } from '../contexts/theme';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function Nav() {
     return (
@@ -10,10 +10,21 @@ export default function Nav() {
                     <ul className="flex between row container-sm clear">
                         <div className="flex">
                             <li>
-                                <Link to='/' className={`navLinks nav-${theme}`}>Top</Link>
+                                <NavLink 
+                                    to='/' 
+                                    exact 
+                                    activeStyle='active' 
+                                    className={`navLinks nav-${theme}`} >
+                                        Top
+                                </NavLink>
                             </li>
                             <li>
-                                <Link to='/new' className={`navLinks nav-${theme}`}>New</Link>
+                                <NavLink 
+                                    to='/new' 
+                                    activeStyle='active' 
+                                    className={`navLinks nav-${theme}`} >
+                                        New
+                                </NavLink>
                             </li>
                         </div>
                         <div className="flex">
