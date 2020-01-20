@@ -215,3 +215,156 @@ export function getUserPosts(postIDs) {
 
 ## Issue: 
 The 'Posts' h2 loads before my data loads in the UserProfile component.
+
+## Getting to know Modules
+
+'..' is used to navigate outside your current directory.
+'.' is used to navigate inside your current directory.
+Absence of any of those above dots directs node to look for the module in the *node_modules* folder.
+
+In importing functions from my API, here is something I noticed:
+- When User is the parent component of UserFeed
+- Both of these components require 'getItemDate' from api.js
+- I figured 'I can just import getItemDate into User, and not have to do that with UserFeed, right?
+- Wrong. I had to import that function into both components. When rendering the child component, you don't necessarily pass on any imports. 
+
+## Ternaries vs If Statements
+
+Ternaries are expressions, if statements are... statements.
+
+<ul>
+  {numComments !== null ? ( comments === null ? <Loading /> : <Comment />) : null}
+</ul>
+
+render() {
+  if (numComments === null) return;
+
+  return (
+    <ul>
+      {comments === null ? <Loading /> : <Comments />}
+    </ul>
+  )
+}
+
+### Code readability:
+I noticed Tyler McGinnis creates functions for small things (remove deleted comments). The by product of this is that it makes code more readable. This is something I should strive for. 
+
+## Implementing Themes Via Context
+
+**1. Create your Context**
+* Create a separate folder named, 'contexts'. Within it, I created a file called theme.js.
+
+```javascript
+// theme.js
+import React from 'react';
+
+const { Consumer, Provider } = React.createContext();
+
+export const ThemeConsumer = Consumer;
+export const ThemeProvider = Provider;
+```
+
+The provider makes the data available to any component in our app that consumes it. Consumer is used to consume the information on the Provider.
+
+**2. Wrap Application inside the ThemeProvider**
+```javascript
+// index.js
+import { ThemeProvider } from './contexts/theme';
+
+...
+
+return (
+    <Router>
+        <ThemeProvider>
+            <div className="body" style={lightBody}>
+                <Nav 
+                    setFeed={this.setFeed}
+                    toggleStyles={this.toggleStyles}
+                    feed={this.state.feed}
+                    style={this.state.style}
+                /> 
+                        
+                <Route exact path='/' component={Feed} />
+                <Route path='/new' component={Feed} />
+                <Route path='/user' component={User} />
+                <Route path='/post' component={Post}/>
+            </div>
+        </ThemeProvider>
+    </Router>
+)
+```
+
+**3. Pass in a value to the Provider**
+```javascript
+<ThemeProvider value={this.state}>
+```
+
+Whatever is inside 'value' will be available to any component in our application that 'consumes' it. 
+
+```javascript
+this.state = {
+    theme: 'light',
+    toggleTheme: () => {
+        this.setState(({ theme }) => ({
+            theme: theme === 'light' ? 'dark' : 'light'
+        }))
+    }
+};
+```
+
+**4. Consuming data from the Provider**
+
+Wrap everything inside the return output of your component inside ThemeConsumer.
+
+```javascript
+// Nav.js
+import { ThemeConsumer } from '../contexts/theme';
+
+...
+
+return (
+    <ThemeConsumer>
+
+    </ThemeConsumer>
+)
+```
+
+Pull the data
+
+```javascript
+return (
+    <ThemeConsumer>
+        {/* Whatever you passed into ThemeProvider's value prop gets passed into here.*/}
+        {({ theme, toggleTheme }) => (
+
+        )}
+    </ThemeConsumer>
+)
+// Required knowledge: Render Prop pattern.
+```
+
+React passes 'theme' and 'toggleTheme' to this function '{() => }' within ThemeConsumer, because that is what was passed into Provider.
+
+**5. Using the data to apply a theme**
+
+For the page background, he nested his whole app in a container div and gave it the classname of the current theme.
+
+```javascript
+<ThemeProvider>
+    <div className={this.state.theme}>
+        <div className='container'>
+            <Nav />
+        </div>
+    </div>
+</ThemeProvider>
+```
+
+Pattern: make a unique prefix, then attach 'light' or 'dark' to it. 
+```javascript
+className={`bg-${theme}`} //bg-light or bg-dark
+```
+
+Which looks much better then: 
+```javascript
+className={theme === 'light' ? classNameLight : classNameDark};
+```
