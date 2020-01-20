@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 // Styles
 import './reset.css';
 import './index.css';
+import { ThemeProvider } from './contexts/theme';
 
 // Components
 import Nav from './components/Nav';
@@ -18,26 +19,13 @@ class App extends React.Component {
         super(props);
         
         this.state = {
-            feed: 'top',
-            style: 'light'
-        };
-
-        this.setFeed = this.setFeed.bind(this);
-        this.toggleStyles = this.toggleStyles.bind(this);
-    }
-
-    setFeed(feed) {
-        this.setState({
-            feed: feed
-        })
-    }
-
-
-    toggleStyles() {
-        // Setting state based on previous state
-        this.setState((state) => ({
-            style: state.style === 'light' ? 'dark' : 'light'
-        }));
+            theme: 'light',
+            toggleTheme: () => {
+                this.setState(({ theme }) => ({
+                    theme: theme === 'light' ? 'dark' : 'light'
+                }))
+            }
+        };    
     }
 
     render() {
@@ -51,36 +39,19 @@ class App extends React.Component {
 
         return (
             <Router>
-                <div className="body" style={this.state.style === 'light' ? lightBody : darkBody}>
-                    <Nav 
-                        setFeed={this.setFeed}
-                        toggleStyles={this.toggleStyles}
-                        feed={this.state.feed}
-                        style={this.state.style}
-                    /> 
-                    
-                    <Route exact path='/' component={Feed} />
-                    <Route path='/new' component={Feed} />
-                    <Route path='/user' component={User} />
-                    <Route path='/post' component={Post}/>
-
-                    {/*
-                    <User 
-                        username="danabramov"
-                        style={this.state.style}
-                    /> */}
-                    
-                    {/*
-                    <Feed 
-                        feed={this.state.feed}
-                        style={this.state.style}
-                    /> */}
-                    {/*
-                    <Comment 
-                        postID="22022466"
-                        style={this.state.style}
-                    />*/}
-                </div>
+                <ThemeProvider value={ this.state }>
+                    <div className={`bg-${}`} >
+                        <Nav 
+                            toggleStyles={this.toggleStyles}
+                            style={this.state.style}
+                        /> 
+                        
+                        <Route exact path='/' component={Feed} />
+                        <Route path='/new' component={Feed} />
+                        <Route path='/user' component={User} />
+                        <Route path='/post' component={Post}/>
+                    </div>
+                </ThemeProvider>
             </Router>
         )
     }
