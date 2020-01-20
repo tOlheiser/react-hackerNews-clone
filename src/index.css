@@ -30,19 +30,7 @@
   justify-content: space-between;
 }
 
-.navLinks {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: bold;
-  font-size: 18px;
-}
 
-.navLinks:hover {
-  cursor: pointer;
-}
-
-.navLinks:first-child {
-  margin-right: .5em;
-}
 
 .active:hover {
   cursor: pointer;
@@ -172,3 +160,102 @@ p {
   margin: 0;
   display: inline-block;
 }
+
+/* ---------------   Updated styles   ------------------- */
+.bg-light {
+  background-color: #FFF;
+}
+
+.bg-dark {
+  background-color: #1C2022;
+}
+
+.nav-light {
+  color: #000;
+  text-decoration: none;
+}
+
+.nav-dark {
+  color: #CBCBCB;
+  text-decoration: none;
+}
+
+.meta {
+  color: #808080;
+}
+.title-light {
+  color: #BB2E1F;
+}
+
+.title-dark {
+  color: #CBCBCB;
+}
+
+.link-light {
+  color: #000;
+}
+
+.link-dark {
+  color: #BEBEBE;
+}
+
+.heading-dark {
+  color: #DADADA;
+}
+
+.heading-light {
+  color: #000;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.container-light {
+  background-color: #EDEDED;
+}
+
+.container-dark {
+  background-color: #2A2D2F;
+}
+
+.content-light {
+  color: #000;
+}
+
+.content-dark {
+  color: #DADADA;
+}
+
+/* Navigation */
+
+.navLinks {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.navLinks:hover {
+  cursor: pointer;
+}
+
+.navLinks:first-child {
+  margin-right: .5em;
+}
+
+
+
+/* Feed */
+
+
+
+
+
+/* ----- Misc Styles ----- */
+.pointer:hover {
+  cursor: pointer;
+}
+
+
+
+
