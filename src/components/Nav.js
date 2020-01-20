@@ -1,10 +1,10 @@
 import React from 'react';
+import { ThemeConsumer } from '../contexts/theme';
 import { Link } from 'react-router-dom';
 
 export default class Nav extends React.Component {
 
     render() {
-        const { feed, setFeed, toggleStyles, style } = this.props; 
 
         const lightNav = {
             color: '#000',
@@ -22,21 +22,29 @@ export default class Nav extends React.Component {
         const navStyle = style === "light" ? lightNav : darkNav;
 
         return (
-            <div className="container">
-                <ul className="flex between row container-sm clear">
-                    <div className="flex">
-                        <li style={feed === 'top' ? active : navStyle} className="navLinks" onClick={() => setFeed('top')}>
-                            <Link to='/'>Top</Link>
-                        </li>
-                        <li style={feed === 'new' ? active : navStyle} className="navLinks" onClick={() => setFeed('new')}>
-                            <Link to='/new'>New</Link>
-                        </li>
-                    </div>
-                    <div className="flex">
-                        <li className="navLinks" ><button onClick={toggleStyles}>{style === 'light' ? '\u{1F4A1}' : '\u{1F526}'}</button></li>
-                    </div>
-                </ul><br></br>
-            </div>
+            <ThemeConsumer>
+                {({ theme, toggleTheme }) => (
+                    <div className="container">
+                    <ul className="flex between row container-sm clear">
+                        <div className="flex">
+                            <li style={navStyle} className="navLinks">
+                                <Link to='/'>Top</Link>
+                            </li>
+                            <li style={navStyle} className="navLinks">
+                                <Link to='/new'>New</Link>
+                            </li>
+                        </div>
+                        <div className="flex">
+                            <li className="navLinks" >
+                                <button onClick={toggleTheme}>
+                                    {theme === 'light' ? '\u{1F4A1}' : '\u{1F526}'}
+                                </button>
+                            </li>
+                        </div>
+                    </ul><br></br>
+                </div>
+                )}
+            </ThemeConsumer>
         );
     }
 }
