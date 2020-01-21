@@ -25,7 +25,6 @@ export default class User extends React.Component {
 
     render() {
         const { profile } = this.state;
-        const username = queryString.parse(this.props.location.search).id;
 
         return (
             <React.Fragment>    
@@ -38,14 +37,14 @@ export default class User extends React.Component {
                     {({ theme }) => (
                         <React.Fragment>
                             <div className="container">
-                                <div className="flex container-sm col">
-                                    <h1 className={`userHeading heading-${theme}`}>
+                                <div className="container-sm col">
+                                    <h1 className={`heading heading-${theme}`}>
                                         {profile.id}
                                     </h1>
 
-                                    <p className="userInfo">joined 
-                                        <span className="userData"> {getItemDate(profile.created)} </span>
-                                        has <span className="userData">{profile.karma.toLocaleString()} </span>karma
+                                    <p className="info">joined 
+                                        <span className="bold"> {getItemDate(profile.created)} </span>
+                                        has <span className="bold">{profile.karma.toLocaleString()} </span>karma
                                     </p>
 
                                     { profile.about != null && 

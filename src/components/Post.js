@@ -36,13 +36,13 @@ export default class Post extends React.Component {
                     <ThemeConsumer>
                         {({ theme }) => (
                             <div className="container">
-                                <div className="flex container-sm col">
-                                    <h1 className="postHeading">
+                                <div className="container-sm col">
+                                    <h1 className="heading">
                                         <a className={`headingLink title-${theme}`} href={post.url}>
                                             {post.title}
                                         </a>
                                     </h1>
-                                    <p className="userInfo">{`by `} 
+                                    <p className="info">{`by `} 
                                         <Link className={`link-${theme}`} to={{
                                             pathname: '/user',
                                             search: `?id=${post.by}`
@@ -68,11 +68,15 @@ export default class Post extends React.Component {
                             </div>
                         )}
                     </ThemeConsumer>
+
+                    { post.kids !== undefined && 
                     
-                    <Comments 
-                        commentIDs={post.kids}
-                        numComments={post.descendants}
-                    />
+                        <Comments 
+                            commentIDs={post.kids}
+                            numComments={post.descendants}
+                        /> 
+                    }
+                    
                 </React.Fragment>
             }
             </React.Fragment>

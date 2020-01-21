@@ -28,7 +28,7 @@ export default class UserFeed extends React.Component {
                 {({ theme }) => (
                     <React.Fragment>
                         <div className="container">
-                            <div className="flex container-sm col">
+                            <div className="container-sm col">
                                 <h2 className={`heading-${theme}`}>Posts</h2>
                                 {posts == null 
                                     ?   <Loading loading="Fetching posts" />
