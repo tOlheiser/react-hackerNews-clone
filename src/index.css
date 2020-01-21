@@ -1,10 +1,11 @@
 .light {
   background-color: #FFF;
-  
+  min-height: 100vh;
 }
 
 .dark {
   background-color: #1C2022;
+  min-height: 100vh;
 }
 
 .container {
@@ -206,7 +207,3 @@ p {
 .content-dark {
   color: #DADADA;
 }
-
-.active {
-  color: #BB2E1F;
-} 
