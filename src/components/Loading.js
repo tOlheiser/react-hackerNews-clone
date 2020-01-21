@@ -2,14 +2,8 @@ import React from 'react';
 import { ThemeConsumer } from '../contexts/theme';
 
 export default class Loading extends React.Component {
-    // componentWillUnmount - clear interval
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            loading: this.props.loading
-        }
-        this.loadingMessage = this.loadingMessage.bind(this);
+    state = {
+        loading: this.props.loading
     }
 
     componentDidMount() {
@@ -20,7 +14,7 @@ export default class Loading extends React.Component {
         clearInterval(this.interval);
     }
 
-    loadingMessage() {
+    loadingMessage = () => {
         const { loading } = this.state;
         
         if (loading === this.props.loading + "...") {

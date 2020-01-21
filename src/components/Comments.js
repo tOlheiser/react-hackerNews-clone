@@ -5,12 +5,8 @@ import { Link } from 'react-router-dom';
 import { ThemeConsumer } from '../contexts/theme';
 
 export default class Comments extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            comments: null,
-        }
+    state = {
+        comments: null,
     }
 
     componentDidMount() {

@@ -5,13 +5,9 @@ import { getUserPosts } from '../utils/api.js';
 import { ThemeConsumer } from '../contexts/theme';
 
 export default class UserFeed extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            posts: null
-        };
-    }
+    state = {
+        posts: null
+    };
 
     componentDidMount() {
         getUserPosts(this.props.postIDs)

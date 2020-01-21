@@ -7,12 +7,8 @@ import { Link } from 'react-router-dom';
 import { ThemeConsumer } from '../contexts/theme';
 
 export default class Post extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            post: null,
-        }
+    state = {
+        post: null,
     }
 
     componentDidMount() {

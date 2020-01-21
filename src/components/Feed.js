@@ -5,13 +5,9 @@ import { getMainFeed } from '../utils/api.js';
 import { ThemeConsumer } from '../contexts/theme';
 
 export default class Feed extends React.Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            items: null
-        };
-    }
+    state = {
+        items: null
+    };
 
     componentDidMount() {
         const { pathname } = this.props.location;

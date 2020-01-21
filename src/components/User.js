@@ -6,13 +6,9 @@ import queryString from 'query-string';
 import { ThemeConsumer } from '../contexts/theme';
 
 export default class User extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            profile: null
-        };
-    }
+    state = {
+        profile: null
+    };
 
     componentDidMount() {
         const { search } = this.props.location;
