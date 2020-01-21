@@ -10,9 +10,10 @@ import './index.css';
 
 // Components
 import Nav from './components/Nav';
-import Feed from './components/Feed';
-import User from './components/User';
-import Post from './components/Post';
+import Loading from './components/Loading';
+const Feed = React.lazy(() => import('./components/Feed'));
+const User = React.lazy(() => import('./components/User'));
+const Post = React.lazy(() => import('./components/Post'));
 
 class App extends React.Component {
     constructor(props) {
@@ -34,11 +35,12 @@ class App extends React.Component {
                 <ThemeProvider value={ this.state }>
                     <div className={this.state.theme}>
                         <Nav /> 
-                            
-                        <Route exact path='/' component={Feed} />
-                        <Route path='/new' component={Feed} />
-                        <Route path='/user' component={User} />
-                        <Route path='/post' component={Post}/>
+                        <React.Suspense fallback={<Loading />}>
+                            <Route exact path='/' component={Feed} />
+                            <Route path='/new' component={Feed} />
+                            <Route path='/user' component={User} />
+                            <Route path='/post' component={Post}/>
+                        </React.Suspense>
                     </div>
                 </ThemeProvider>
             </Router>
