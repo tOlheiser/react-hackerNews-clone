@@ -32,9 +32,9 @@ class App extends React.Component {
         return (
             <Router>
                 <ThemeProvider value={ this.state }>
-                    <div className={`body bg-${this.state.theme}`} >
+                    <div className={this.state.theme}>
                         <Nav /> 
-                        
+                            
                         <Route exact path='/' component={Feed} />
                         <Route path='/new' component={Feed} />
                         <Route path='/user' component={User} />
