@@ -1,7 +1,7 @@
 import React from 'react';
 import Loading from './Loading';
 import Comments from './Comments';
-import { getPost, getItemDate } from '../utils/api.js';
+import { getItem, getItemDate } from '../utils/api.js';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { ThemeConsumer } from '../contexts/theme';
@@ -14,7 +14,7 @@ export default class Post extends React.Component {
     componentDidMount() {
         const { search } = this.props.location;
 
-        getPost(queryString.parse(search).id)
+        getItem(queryString.parse(search).id)
             .then(post => this.setState({
                 post: post
             }))
