@@ -17,7 +17,7 @@ export default class Comments extends React.Component {
         getComments(this.props.commentIDs)
             .then(item => this.setState({
                 comments: item
-            }))
+            })) 
     }
 
     render() {
@@ -34,10 +34,10 @@ export default class Comments extends React.Component {
                                 {({ theme }) => (
                                     comments.map(comment => 
                                         <li key={comment.id}>
-                                            <div className="commentContainer">
-                                                <div className={`flex commentSmContainer col container-${theme}`}>
-                                                    <p className="commentText commentInfo">{`by `}
-                                                        <Link className={`infoLink link-${theme}`} to={{
+                                            <div className="container">
+                                                <div className={`commentCard col container-${theme}`}>
+                                                    <p className="commentInfo">{`by `}
+                                                        <Link className={`link-${theme}`} to={{
                                                             pathname: '/user',
                                                             search: `?id=${comment.by}`
                                                         }}>
@@ -48,7 +48,7 @@ export default class Comments extends React.Component {
                                                     </p>
                                                     
                                                     <p 
-                                                        className={`commentText content-${theme}`} 
+                                                        className={`comment content-${theme}`} 
                                                         dangerouslySetInnerHTML={{__html: comment.text}}>
                                                     </p>
                                                 </div>
