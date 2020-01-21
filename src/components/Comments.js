@@ -35,7 +35,7 @@ export default class Comments extends React.Component {
                                     comments.map(comment => 
                                         <li key={comment.id}>
                                             <div className="container">
-                                                <div className={`commentCard col container-${theme}`}>
+                                                <div className={`container-sm commentCard col container-${theme}`}>
                                                     <p className="commentInfo">{`by `}
                                                         <Link className={`link-${theme}`} to={{
                                                             pathname: '/user',
