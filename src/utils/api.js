@@ -1,51 +1,67 @@
+const api = 'https://hacker-news.firebaseio.com/v0';
+const json = '.json?print=pretty';
+
+// ----- Top & New 
+
 export function getMainFeed(feed) {
-    // feed should hold the value 'top' or 'new'
-    return fetch(`https://hacker-news.firebaseio.com/v0/${feed}stories.json?print=pretty`)
-      .then(response => response.json())
-      .then(ids => ids.slice(0, 50))
-      .then(ids => Promise.all(ids.map(id => 
-        fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
-        .then(response => response.json())
-      )))
-        .then(items => 
-            items.filter(item => item != null)
-                 .filter(item => item.url != null)
-        )
+  return getIDs(feed)
+    .then(stories => stories.slice(0, 50))
+    .then(ids => getItems(ids))
+    .then(stories => removeDeadStories(stories))
 }
 
+
+// ----- User
+
 export function getUserProfile(username) {
-  return fetch(`https://hacker-news.firebaseio.com/v0/user/${username}.json?print=pretty`)
+  return fetch(`${api}/user/${username}${json}`)
     .then(response => response.json())
 }
 
 export function getUserPosts(postIDs) {
-    // Reduces what could be an array of 1000's of items down to 50
-    postIDs = postIDs.slice(0, 50);
+  postIDs = postIDs.slice(0, 50);
 
-    // running a fetch request on every item ID.
-    return Promise.all(postIDs.map(id => 
-      getPost(id)
-      )) // of the items received, I only want only stories, and only stories that haven't been deleted. 
-        .then(items => 
-          items.filter(item => item.type === "story")
-               .filter(item => item.deleted !== true)
-               .filter(item => item.url != null)
-        )
+  return getItems(postIDs) 
+    .then(posts => removeJunkPosts(posts))
 }
 
-export function getPost(postID) {
-  return fetch(`https://hacker-news.firebaseio.com/v0/item/${postID}.json?print=pretty`)
+// ----- Post
+
+export function getComments(ids) {
+  return getItems(ids)
+    .then(comments => comments.filter(comment => comment.deleted !== true)
+    )
+}
+
+
+// ----- Helpers
+
+export function getItem(postID) {
+  return fetch(`${api}/item/${postID}${json}`)
     .then(response => response.json())
 }
 
-export function getComments(ids) {
-  return Promise.all(ids.map(id =>
-    fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
-      .then(response => response.json())
-  ))
-    .then(comments => 
-      comments.filter(comment => comment.deleted != true)
-    )
+function getIDs(feed) {
+  return fetch(`${api}/${feed}stories${json}`)
+    .then(response => response.json())
+}
+
+function getItems(ids) {
+  return Promise.all(ids.map(id => getItem(id)))
+}
+
+
+// ----- Filter Functions 
+
+function removeDeadStories(items) {
+  return items.filter(item => item !== null) // no undefined items
+              .filter(item => item.url !== null) // no dead urls
+}
+
+function removeJunkPosts(posts) {
+  return posts.filter(post => post.type === "story") // only stories
+    .filter(post => post.deleted !== true) // remove deleted posts
+    .filter(post => post.url != null) // no dead urls
 }
 
 export function getItemDate(time) {
