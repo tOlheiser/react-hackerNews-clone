@@ -1,68 +1,32 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Hacker News Clone
+**There are three views**:
 
-## Available Scripts
+* News Feed
+* Post View
+* User View
 
-In the project directory, you can run:
+The commonality between all these pages is that they all have a navbar with the links 'Top', 'New', and a light button to toggle the styles of the page.
 
-### `npm start`
+**Workflow** While following Tyler McGinnis' React course, I found that he builds one view at a time and then ties them all together when they're all built. I intend on doing the same with this project.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## News Feed
+Displays a list of 50 posts. Each 'post item' contains:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+* **Title** of the post + **embedded link** to the page.
+* String: "by **username** on **date**, **time** with **number of comments** 'username' links to the user view of the user who submitted the post, and the comment integer links to the post view of that page displaying the comments.
 
-### `npm test`
+**Data needed from the API**: An array of posts, each containing the:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Post title
+* Link to page
+* User who submitted the post
+* Date it was posted
+* Comments
 
-### `npm run build`
+The time is in an unformatted number format, and each post contains comment ID's. I'll have to iterate over each comment, send a request, and pull the comment data to display it.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## User View
+I need to fetch two things:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* User information
+* Stories the user has contributed. These will be separated into two components.
