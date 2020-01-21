@@ -1,3 +1,12 @@
+.light {
+  background-color: #FFF;
+  
+}
+
+.dark {
+  background-color: #1C2022;
+}
+
 .container {
   width: 100%;
   display: flex;
@@ -6,38 +15,56 @@
 
 .container-sm {
   width: 80%;
-  justify-content: center;
-}
-
-.center {
-  text-align: center;
-}
-
-.flex {
-  display: flex;
+  max-width: 1200px;
 }
 
 .row {
   flex-direction: row;
-
+  display: flex;
 }
 
 .col {
   flex-direction: column;
+  display: flex;
 }
 
-.between {
+.space-between {
   justify-content: space-between;
 }
 
-.active:hover {
+.nav {
+  width: 80%;
+  max-width: 1200px;
+  margin-top: 4em;
+  margin-bottom: 3em;
+}
+
+/* Navigation */
+
+.navLinks {
+  
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.navLinks:first-child {
+  margin-right: .5em;
+}
+
+button {
+  background: none;
+  border: none;
   cursor: pointer;
+  text-align: center;
+  font-size: 1.7em;
 }
 
 .clear {
   margin-top: 4em;
   margin-bottom: 3em;
 }
+
+/* Feed */
 
 .item {
   margin-top: 1.5em;
@@ -48,127 +75,84 @@
   margin-top: 0;
 }
 
+/* Comment */
+
+.comment {
+  padding: .8em;
+}
+
+.commentCard {
+  margin: .4em 0 .4em 0;
+  width: 80%;
+  border-radius: 5px;
+}
+
+/* Typography */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2 {
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+p {
+  padding: .5em 0 .5em 0;
+  font-size: 16px;
+}
+
 .title {
   display: block;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
   font-size: 16px;
   padding-bottom: 7px;
   text-decoration: none;
 }
 
-.info {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 16px;
-  color: #808080;
-  padding-top: 0;
-}
-
-.lightbulb {
-  color: #BB2E1F;
-  font-size: 1.7em;
-}
-
-/* User View Styles */
-.userHeading {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.heading {
   font-size: 32px;
   font-weight: bold;
-  color: #000;
-}
-
-.userInfo {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 16px;
-  color: #808080;
-  padding-top: .75em;
-}
-
-.userData {
-  font-weight: bold;
-}
-
-h2 {
-  margin-top: 1.2em;
-  margin-bottom: 1.2em;
-  font-family: 'Segoi UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.postTitle {
-  margin-top: 1.2em;
-  margin-bottom: 0;
-  padding-bottom: .1em;
-}
-
-.postTitle:first-of-type {
-  margin-top: 0;
-}
-
-#root {
-  height: 100vh;
-}
-
-.body {
-  height: 100vh;
-}
-
-/* Comment View */
-.postHeading {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 32px;
-  font-weight: bold;
-  color: #000;
+  padding-bottom: .5em;
 }
 
 .headingLink {
   text-decoration: none;
 }
 
-.commentContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+.center {
+  text-align: center;
 }
 
-.commentSmContainer {
-  margin: .4em 0 .4em 0;
-  width: 80%;
-  background-color: #EDEDED;
-  border-radius: 5px;
-  /* include rounder border */
-}
-
-p {
-  padding: .5em 0 .5em 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.info {
   font-size: 16px;
-}
-
-.commentText {
-  padding: .8em;
+  color: #808080;
+  padding-top: 0;
 }
 
 .commentInfo {
+  font-size: 16px;
   color: #808080;
+  padding-left: .8em;
 }
 
-.postHeading {
-  margin: 0;
-  display: inline-block;
+.bold {
+  font-weight: bold;
 }
 
-/* ---------------   Updated styles   ------------------- */
+/* dangerousInnerHTML */
 
-
-.bg-light {
-  background-color: #FFF;
+.dark a {
+  color: #DADADA;
 }
 
-.bg-dark {
-  background-color: #1C2022;
+.dark p {
+  color: #DADADA;
 }
+
+/* Themeing */
 
 .nav-light {
   color: #000;
@@ -207,10 +191,6 @@ p {
   color: #000;
 }
 
-.underline {
-  text-decoration: underline;
-}
-
 .container-light {
   background-color: #EDEDED;
 }
@@ -229,53 +209,4 @@ p {
 
 .active {
   color: #BB2E1F;
-}
-
-/* Navigation */
-
-.navLinks {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.navLinks:hover {
-  cursor: pointer;
-}
-
-.navLinks:first-child {
-  margin-right: .5em;
-}
-
-
-
-/* Feed */
-
-
-
-
-
-/* ----- Misc Styles ----- */
-.pointer:hover {
-  cursor: pointer;
-}
-
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-  font-size: 1.7em;
-}
-
-
-.dark a {
-  color: #DADADA;
-}
-
-.dark p {
-  color: #DADADA;
-}
-
-
-
+} 
